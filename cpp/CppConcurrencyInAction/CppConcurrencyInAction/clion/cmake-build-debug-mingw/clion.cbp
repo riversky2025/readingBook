@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="clion"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clion">
+				<Option output="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/clion.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++/backward"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include-fixed"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clion"/>
+					<CompileFile command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clion/fast">
+				<Option output="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/clion.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include/c++/backward"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/include-fixed"/>
+					<Add directory="D:/MinGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clion/fast"/>
+					<CompileFile command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/mingw64/bin/mingw32-make.exe -f &quot;E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Abstruct.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Abstruct.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo211.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo211.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo24.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo24.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo27.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo27.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo28.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo28.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo281.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo281.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo31.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo31.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo311.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo311.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo33.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo33.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo34.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo34.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo39.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo39.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Func21.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Func21.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/HierarchicalMutex.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/HierarchicalMutex.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/main.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

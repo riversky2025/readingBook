@@ -1,0 +1,4 @@
+ToolSet: w64 5.0@D:\MinGW\mingw64
+Options: msvc.arch=x86, version=8.1
+
+Options:

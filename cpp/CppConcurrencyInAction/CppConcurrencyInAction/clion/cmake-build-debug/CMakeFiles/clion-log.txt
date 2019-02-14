@@ -1,0 +1,41 @@
+"D:\Program Files\JetBrains\CLion 2018.1.3\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\读书笔记\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion
+-- The C compiler identification is GNU 7.1.0
+-- The CXX compiler identification is GNU 7.1.0
+-- Check for working C compiler: D:/MinGW/mingw64/bin/gcc.exe
+-- Check for working C compiler: D:/MinGW/mingw64/bin/gcc.exe -- broken
+CMake Error at D:/Program Files/JetBrains/CLion 2018.1.3/bin/cmake/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake:52 (message):
+  The C compiler
+
+    "D:/MinGW/mingw64/bin/gcc.exe"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: E:/璇讳功绗旇/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug/CMakeFiles/CMakeTmp
+    
+    Run Build Command:"D:/MinGW/mingw64/bin/mingw32-make.exe" "cmTC_49ed8/fast"
+    D:/MinGW/mingw64/bin/mingw32-make.exe -f CMakeFiles\cmTC_49ed8.dir\build.make CMakeFiles/cmTC_49ed8.dir/build
+    mingw32-make.exe[1]: Entering directory 'E:/璇讳功绗旇/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug/CMakeFiles/CMakeTmp'
+    Building C object CMakeFiles/cmTC_49ed8.dir/testCCompiler.c.obj
+    D:\MinGW\mingw64\bin\gcc.exe    -o CMakeFiles\cmTC_49ed8.dir\testCCompiler.c.obj   -c E:\鐠囪鍔熺粭鏃囶唶\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c
+    gcc.exe: error: E:\鐠囪鍔熺粭鏃囶唶\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c: No such file or directory
+    gcc.exe: fatal error: no input files
+    compilation terminated.
+    CMakeFiles\cmTC_49ed8.dir\build.make:64: recipe for target 'CMakeFiles/cmTC_49ed8.dir/testCCompiler.c.obj' failed
+    mingw32-make.exe[1]: *** [CMakeFiles/cmTC_49ed8.dir/testCCompiler.c.obj] Error 1
+    mingw32-make.exe[1]: Leaving directory 'E:/璇讳功绗旇/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug/CMakeFiles/CMakeTmp'
+    Makefile:125: recipe for target 'cmTC_49ed8/fast' failed
+    mingw32-make.exe: *** [cmTC_49ed8/fast] Error 2
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "E:/璇讳功绗旇/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "E:/璇讳功绗旇/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug/CMakeFiles/CMakeError.log".

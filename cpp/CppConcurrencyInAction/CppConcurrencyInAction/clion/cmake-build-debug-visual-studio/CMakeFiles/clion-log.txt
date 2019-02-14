@@ -1,0 +1,16 @@
+D:\cmake-3.11.4-win32-x86\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - NMake Makefiles" E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion
+-- The C compiler identification is MSVC 19.15.26732.1
+-- The CXX compiler identification is MSVC 19.15.26732.1
+-- Check for working C compiler: D:/Program Files/vs/VC/Tools/MSVC/14.15.26726/bin/Hostx86/x86/cl.exe
+-- Check for working C compiler: D:/Program Files/vs/VC/Tools/MSVC/14.15.26726/bin/Hostx86/x86/cl.exe -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: D:/Program Files/vs/VC/Tools/MSVC/14.15.26726/bin/Hostx86/x86/cl.exe
+-- Check for working CXX compiler: D:/Program Files/vs/VC/Tools/MSVC/14.15.26726/bin/Hostx86/x86/cl.exe -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-debug-visual-studio

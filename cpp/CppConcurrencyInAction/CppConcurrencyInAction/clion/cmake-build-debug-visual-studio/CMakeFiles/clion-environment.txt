@@ -1,0 +1,4 @@
+ToolSet: 15.0@D:\Program Files\vs
+Options: msvc.arch=x86, version=8.1
+
+Options:

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="clion"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clion">
+				<Option output="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release/clion.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="E:/libcommon/Boost/include/boost-1_63"/>
+					<Add directory="E:/libcommon/quickfix/include"/>
+					<Add directory="D:\Program Files\vs\VC\Tools\MSVC\14.15.26726\ATLMFC\include"/>
+					<Add directory="D:\Program Files\vs\VC\Tools\MSVC\14.15.26726\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clion"/>
+					<CompileFile command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="clion/fast">
+				<Option output="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release/clion.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="E:/libcommon/Boost/include/boost-1_63"/>
+					<Add directory="E:/libcommon/quickfix/include"/>
+					<Add directory="D:\Program Files\vs\VC\Tools\MSVC\14.15.26726\ATLMFC\include"/>
+					<Add directory="D:\Program Files\vs\VC\Tools\MSVC\14.15.26726\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\8.1\include\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clion/fast"/>
+					<CompileFile command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/cmake-build-release"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f E:\bookreader\cpp\CppConcurrencyInAction\CppConcurrencyInAction\clion\cmake-build-release\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Abstruct.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Abstruct.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo211.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo211.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo24.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo24.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo27.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo27.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo28.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo28.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo281.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo281.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo31.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo31.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo311.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo311.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo313.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo313.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo33.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo33.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo34.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo34.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo39.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo39.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo43.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Demo43.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Func21.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/Func21.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/HierarchicalMutex.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/HierarchicalMutex.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/main.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/match/IDGenerator.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/match/Market.cpp">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/match/Market.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/match/Order.h">
+			<Option target="clion"/>
+		</Unit>
+		<Unit filename="E:/bookreader/cpp/CppConcurrencyInAction/CppConcurrencyInAction/clion/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
