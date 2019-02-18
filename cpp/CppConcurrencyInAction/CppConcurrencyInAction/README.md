@@ -606,7 +606,7 @@ void ThreadSafeQueue<T>::push(T newValue) {
 ### 4.2 使用future等待一次性事件
 C++标准库模型中将等待一次性事件成为期望(future)有两种形式,唯一期望(std::future<>)和共享期望(std::shared_future<>).std::future<>实例只能与一个指定事件相关联，而std::shared_future的实例就能关联多个事件。后者的实现，所有实例都会同时变成就绪状态，并且他们可以访问与事件相关的任何数据。需要注意，其同步过程仍然必须使用互斥量或者类似同步机制进行访问保护。不过当多个线程对一个std::shared_future<>实例的副本进行访问，是不需要期望同步的。  
 最基本的一次性事件，就是一个后台运行处的计算结果。  
-#### 4.2.1 带返回值的后台任务
+#### 4.2.1 带返回值的后台任务(std::async)
 假设，你有一个需要长时间的运算，你需要其能计算出一个有效的值，但是你现在并不迫切需要这个值。可能你已经找到了生命、宇宙，以及万物的答案，就像道格拉斯·亚当斯[1]一样。你可以启动一个新线程来执行这个计算，但是这就意味着你必须关注如何传回计算的结果，因为std::thread并不提供直接接收返回值的机制。这里就需要std::async函数模板(也是在头文<future>中声明的)了。  
 当任务的结果你不着急要时，你可以使用std::async启动一个异步任务。与std::thread对象等待的方式不同，std::async会返回一个std::future对象，这个对象持有最终计算出来的结果。当你需要这个值时，你只需要调用这个对象的get()成员函数；并且会阻塞线程直到“期望”状态为就绪为止；之后，返回计算结果。下面清单中代码就是一个简单的例子。  
 ```
@@ -621,8 +621,115 @@ int main()
   std::cout<<"The answer is "<<the_answer.get()<<std::endl;
 }
 ```
+与std::thread 做的方式一样，std::async允许你通过添加额外的调用参数，向函数传递额外的参数。当第一个参数是一个指向成员函数的指针，第二个参数提供有这个函数成员类的具体对象(不是直接的，就是通过指针，还可以包装在std::ref中)，剩余的参数可作为成员函数的参数传入。否则，第二个和随后的参数将作为函数的参数，或作为指定可调用对象的第一个参数。就如std::thread，当参数为右值(rvalues)时，拷贝操作将使用移动的方式转移原始数据。这就允许使用“只移动”类型作为函数对象和参数。  
+```.h
+//
+// Created by RS on 2019/2/14.
+//
 
+#ifndef CONACTION_DEMO47_H
+#define CONACTION_DEMO47_H
+
+
+#include <string>
+#include "../Abstruct.h"
+struct X{
+    void foo(int,std::string const&);
+    std::string bar(std::string const&);
+};
+struct Y{
+    double operator()(double);
+};
+/**
+ * 删除拷贝构造以及赋值构造
+ * 重载右值操作(包含赋值和拷贝)
+ */
+class MoveOnly{
+public:
+    MoveOnly(){}
+    MoveOnly(MoveOnly&&){}
+    MoveOnly(MoveOnly const&)= delete;
+    MoveOnly&operator=(MoveOnly&&){}
+    MoveOnly&operator=(MoveOnly const&)= delete;
+    void operator()();
+};
+class Demo47 : public Abstruct{
+public:
+    void run() override;
+};
+#endif //CONACTION_DEMO47_H
+```
+```.cpp
+//
+// Created by RS on 2019/2/14.
+//
+
+#include "Demo47.h"
+#include <iostream>
+#include <future>
+
+void Demo47::run() {
+    X x;
+    auto f1 = std::async(&X::foo, &x, 42, "hello");//调用p->foo(42,"hello")
+    auto f2 = std::async(&X::bar, x, "good bye");//调用的是副本
+    std::cout << f2.get() << std::endl;
+    Y y;
+    auto f3 = std::async(Y(), 3.141);//调用tmpy(3.141) tmpy通过Y的移动构造函数得到
+    auto f4 = std::async(std::ref(y), 2.718);
+    std::cout << f3.get() << std::endl;
+    std::cout << f4.get() << std::endl;
+//    X baz(X&);
+//    std::async(baz,std::ref(x));//调用baz(x)
+    auto f5 = std::async(MoveOnly());//通过std::move(MoveOnly())构造得到的
+}
+void X::foo(int foi, std::string const &fstring) {
+    std::cout << foi << " :" << fstring << std::endl;
+}
+std::string X::bar(std::string const &bar) {
+    return bar + "-bar";
+}
+double Y::operator()(double a) {
+    return a * a;
+}
+void MoveOnly::operator()() {
+    std::cout << "MoveOnly::operator()" << std::endl;
+}
+```
+其实std::async的执行可以指定是否在新线程上执行。  
+```
+auto f6=std::async(std::launch::async,Y(),1.2);//在新线程上执行
+auto f7=std::async(std::launch::deferred,baz,std::ref(x));//在wait或get()调用时执行
+auto f8=std::async(std::launch::deferred|std::launch::async,baz,std::ref(x));//实现选择执行方式
+auto f9=std::async(baz,std::ref(x));
+f7.wait();
+```
+通过std::async的方式获取std::future并不是唯一的。  
+* 你也可以将任务包装进一个std::packaged_task实例中。
+* 也可以通过编写代码使用std::promise类型模板显示设置值。
+> std::packaged_task 比std::promise具有更高层的抽象。所以从高抽象的模板说起。
 #### 4.2.2 任务与期望
+std::packaged_task<>对一个函数或者可调用对象，绑定一个期望。当std::packaged_task<>对象被调用，它就会调用相关函数或可调用对象，将期望状态置为就绪，返回值也会被存储为相关数据。当一个粒度较大的操作可以被分解为独立子任务时，其中每个子任务就可以包含在一个std::packaged_task<>实例中，之后这个实例传递到任务调度器或者线程池中。对任务的细节进行抽象，调度器仅处理std::packaged_task<>实例，而非处理单独的函数。  
+std::packaged_task<>的模板参数是一个函数签名，比如void()就是一个没有参数也没有返回值的函数，或int(std::string&,double*)就是一个非const引用的std::string 和一个指向double类型的指针，并且返回类型是int.当你构造出一个std::packaged_task<>实例时，你必须传入一个函数或可调用对象，这个函数可调用的对象需要能接收指定的参数和返回可转换为制定返回类型的值。类型可以不完全匹配；你可以用一个int类型的参数和返回一个float类型的函数，来构建std::packaged_task< double(double)>的实例，因为在这里类型是可以隐式转换的。
+
+指定函数签名的返回类型可以用来标识，从get_future()返回的std::future< >类型，不过函数签名的参数列表，可以用来指定“打包任务”的函数操作符。如例如模板偏特化std::packaged_task< std::string(std::vector< char*>,int)>将在下面的代码清单中使用。  
+```
+template <>
+class packaged_task<std::string(std::vector<char>*,int) >{
+public:
+    template <typename Callable>
+    explicit packaged_task(Callable&&f);
+    std::future<std::string> get_future();
+    void operator()(std::vector<char>*,int);
+};
+```
+以上偏特化后的类是一个可调用对象，
+1. 可以传递到std::thread中
+2. 可以传递到另一函数中直接调用（可以为函数调用操作符提供所需参数，返回值作为异步结果存储在std::future中，通过get_futrue获取）
+3. 可以将一个任务包含进对象，并且在检索期望之前，将std::packaged_task对象传入，以便调用时能及时找到。  
+**线程间传递任务**
+比如类似gui方面的业务，当一个线程需要更新界面时，他需要发出一条信息给正确的线程，让特定的线程来做界面更新。std::packaged_task不需要发送信息给gui相关线程就可以完成这种功能。
+
+**这种方式Clion中练习好**
 #### 4.2.3 使用std::promises
 #### 4.2.4 为“期望”存储“异常”
 #### 4.2.5 多个线程的等待
