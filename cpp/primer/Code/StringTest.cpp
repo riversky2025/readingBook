@@ -4,27 +4,27 @@
 //
 // Created by RS on 2019/3/15.
 //
-TEST_CASE("×Ö·û´®²âÊÔ"){
+TEST_CASE("ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"){
     using namespace std;
     SECTION("construct") {
-        const char *cp = "hello World!!!";//ÒÔ¿Õ×Ö·û´®½áÊøµÄÊý×é
+        const char *cp = "hello World!!!";//ï¿½Ô¿ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         char noNull[] = {'H', 'i'};
-        string s1(cp);//¿½±´cpÖÐµÄ×Ö·ûÖªµÀÓöµ½¿Õ×Ö·û,s1="Hello World!!!"
+        string s1(cp);//ï¿½ï¿½ï¿½ï¿½cpï¿½Ðµï¿½ï¿½Ö·ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½,s1="Hello World!!!"
         REQUIRE("hello World!!!"==s1);
-        string s2(noNull, 2);//´ÓnoNull¿½±´Á½¸ö×Ö·û;s2=="Hi"
+        string s2(noNull, 2);//ï¿½ï¿½noNullï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½;s2=="Hi"
         REQUIRE("Hi"==s2);
-        string s3(noNull);//Î´¶¨Òå:noNull²»ÊÇÒÔ¿Õ×Ö·û´®½áÊø
+        string s3(noNull);//Î´ï¿½ï¿½ï¿½ï¿½:noNullï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         std::cout<<"s3:"<<s3<<std::endl;
-        string s4{cp+6,5};//´Ócp[6]¿ªÊ¼¿½±´5¸ö×Ö·û;s4=="World"
+        string s4{cp+6,5};//ï¿½ï¿½cp[6]ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½Ö·ï¿½;s4=="World"
         REQUIRE(s4=="World");
-        string s5(s1,6,5);//´Ós1[6]¿ªÊ¼¿½±´5¸ö×Ö·û;s5="World"
+        string s5(s1,6,5);//ï¿½ï¿½s1[6]ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½Ö·ï¿½;s5="World"
         REQUIRE(s5=="World");
-        string s6(s1,6);//´Ós1[6]¿ªÊ¼¿½±´,Ö±ÖÁs1Ä©Î²;s6=="World!!!"
+        string s6(s1,6);//ï¿½ï¿½s1[6]ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½,Ö±ï¿½ï¿½s1Ä©Î²;s6=="World!!!"
         REQUIRE(s6=="World!!!");
-        string s7(s1,6,20);//ÕýÈ·,Ö»¿½±´s1µ½Ä©Î²;s7==World!!!
+        string s7(s1,6,20);//ï¿½ï¿½È·,Ö»ï¿½ï¿½ï¿½ï¿½s1ï¿½ï¿½Ä©Î²;s7==World!!!
         REQUIRE(s7=="World!!!");
         try {
-            string s8(s1,16);//Å×³öÒ»¸öout_of_rangeÒì³£
+            string s8(s1,16);//ï¿½×³ï¿½Ò»ï¿½ï¿½out_of_rangeï¿½ì³£
         }catch (std::exception & e){
             std::cout<<"exception:"<<e.what()<<std::endl;
         }
