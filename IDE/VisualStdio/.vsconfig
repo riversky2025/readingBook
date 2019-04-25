@@ -1,0 +1,28 @@
+{
+	"version": "1.0",
+	"components": [
+		"Microsoft.VisualStudio.Workload.ManagedDesktop",
+		"Microsoft.VisualStudio.Workload.NativeDesktop",
+		"Microsoft.VisualStudio.Workload.Universal",
+		"Microsoft.VisualStudio.Workload.Data",
+		"Microsoft.VisualStudio.Workload.VisualStudioExtension",
+		"microsoft.net.componentgroup.targetingpacks.common",
+		"microsoft.visualstudio.component.entityframework",
+		"microsoft.visualstudio.component.intellitrace.frontend",
+		"microsoft.visualstudio.component.debugger.justintime",
+		"microsoft.visualstudio.component.liveunittesting",
+		"microsoft.visualstudio.component.sql.datasources",
+		"microsoft.visualstudio.component.vc.diagnostictools",
+		"microsoft.visualstudio.component.vc.cmake.project",
+		"microsoft.visualstudio.component.vc.testadapterforboosttest",
+		"microsoft.visualstudio.component.vc.testadapterforgoogletest",
+		"microsoft.visualstudio.componentgroup.nativedesktop.win81",
+		"microsoft.visualstudio.component.vc.atlmfc",
+		"microsoft.visualstudio.component.vc.140",
+		"microsoft.component.netfx.core.runtime",
+		"microsoft.visualstudio.component.testtools.core",
+		"microsoft.visualstudio.component.git",
+		"component.github.visualstudio",
+		"component.vscmaketwizards-e5ff2ecf-7e91-4ff0-a7d5-26e8f0b3dab9"
+	]
+}

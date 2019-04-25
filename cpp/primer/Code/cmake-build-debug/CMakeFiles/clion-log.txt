@@ -1,0 +1,4 @@
+D:\devsoft\Cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe -DCMAKE_C_COMPILER=D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/cl.exe -DCMAKE_CXX_COMPILER=D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/cl.exe -G "CodeBlocks - NMake Makefiles" H:\readingBook\cpp\primer\Code
+-- Configuring done
+-- Generating done
+-- Build files have been written to: H:/readingBook/cpp/primer/Code/cmake-build-debug

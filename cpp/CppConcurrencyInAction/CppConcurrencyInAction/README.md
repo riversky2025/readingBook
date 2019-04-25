@@ -579,13 +579,13 @@ bool ThreadSafeQueue<T>::tryPop(T &value) {
 
 template<typename T>
 std::shared_ptr<T> ThreadSafeQueue<T>::tryPop() {
-    std::lock_guard<std::mutex> lk(mut);
-    if(data_queue.empty()){
-        return std::shared_ptr<T> ();
-    }
-    std::shared_ptr<T> res(std::make_shared<T>(data_queue.front()));
-    data_queue.pop();
-    return res;
+        std::lock_guard<std::mutex> lk(mut);
+        if(data_queue.empty()){
+            return std::shared_ptr<T> ();
+        }
+        std::shared_ptr<T> res(std::make_shared<T>(data_queue.front()));
+        data_queue.pop();
+        return res;
 }
 
 template<typename T>
@@ -729,16 +729,817 @@ public:
 **线程间传递任务**
 比如类似gui方面的业务，当一个线程需要更新界面时，他需要发出一条信息给正确的线程，让特定的线程来做界面更新。std::packaged_task不需要发送信息给gui相关线程就可以完成这种功能。
 
-**这种方式Clion中练习好**
-#### 4.2.3 使用std::promises
-#### 4.2.4 为“期望”存储“异常”
-#### 4.2.5 多个线程的等待
+```
+//
+// Created by RS on 2019/2/15.
+//
+#ifndef CONACTION_DEMO49_H
+#define CONACTION_DEMO49_H
+#include <mutex>
+#include <deque>
+#include <future>
+#include <iostream>
+#include "../Abstruct.h"
+#include <chrono>
+#include <iostream>
+#include <string>
+/**
+ * 消息驱动的模型(类似于观察者模式实现的功能)
+ * 后台线程负责构造指令
+ *
+ * Demo线程负责解析并执行
+ */
+class Demo49 : public Abstruct{
+public:
+    Demo49(){
+        guiBgThread=new std::thread([&]{
+            gui_bg_thread();
+        });
+        guiBgThread->detach();
+    }
+    void run() override{
+        Demo49 demo49;
+        demo49.GuiThread();
+    }
+    bool GuiShutdownMessageReceived(){
+        if(str=="Y"){
+            return true;
+        }else{
+            return false;
+        }
 
+    }
+    void GetAndProcessGuiMessage(){
+//        doMsg();
+    }
+    void doMsg(){
+        std::cout<<"处理指令："<<str<<std::endl;
+    }
+    void GuiThread(){//1 主线程
+        while (!GuiShutdownMessageReceived()){//2循环直到收到关闭图形界面信息
+            GetAndProcessGuiMessage();//3轮询消息界面处理
+            std::packaged_task<int()> task;
+            {
+                std::lock_guard<std::mutex> lk(m);
+                if(tasks.empty()){//4当队列中没有任务时
+//                    std::this_thread::sleep_for(std::chrono::seconds(3));
+                    continue;
+                }
+
+                task=std::move(tasks.front());//5有任务时
+                tasks.pop_front();
+            }
+            task();//6 直接调用--这里“期望与任务相关，当执行完成时，其状态会被置为"就绪状态"
+        }
+    }
+    template <typename Func>
+    std::future<int> post_task_for_gui_thread(Func f){//添加任务
+        std::packaged_task<int()> task(f);//7 创建打包任务
+        auto res=task.get_future();//8 调用获取future对象
+        std::lock_guard<std::mutex> lk(m);//9任务加入队列之前加锁
+        tasks.push_back(std::move(task));//10期望将返回调用函数
+        return  res;//
+    }
+    void gui_bg_thread(){
+        while (true){
+            std::cout<<"请输入消息(是否关闭“Y/N”)"<<std::endl;
+            std::cin >> str;
+            auto fu=post_task_for_gui_thread([=]{
+                std::cout<<"balabala:"<<str<<std::endl;
+                return str.length();
+            });
+
+           std::cout<< "长度："<<fu.get()<<std::endl;
+        }
+    }
+private:
+    std::thread * guiBgThread;
+    std::string str;
+    std::mutex m;
+    std::deque<std::packaged_task<int()>> tasks;
+};
+#endif //CONACTION_DEMO49_H
+```
+#### 4.2.3 使用std::promises
+目前常见的网络连接方式是一个连接一个线程。这样容易将系统资源耗尽。常用的处理方法是每个线程同时处理多个连接事件。   
+考虑一个线程处理多个连接事件，来自不同的端口连接的数据包基本上是以乱序方式进行处理的；同样的，数据包也将以乱序的方式进入队列。这样会出现应用不是等待数据发送成功就是等待新一批来自指定网络接口的数据接收成功。（一对std::promise/std::future会为这种方式提供一个可行的机制，在期望上可以阻塞等待线程，同时提供数据的线程可以使用组合中的承诺来对相关值进行设置，以及将期望的状态置为就绪）。  
+```
+#include <future>
+void process_connections(connection_set& connections){
+    while(!done(connections))//1
+    {
+        for(connection_iterator connection=connections.begin();end=connections.end();++conncection){//2
+            if(connection->has_incoiming_data()){//3
+                data_packet data=connection->incoming();
+                std::promise<payload_type> & p=connection->get_promise(data.id);//4
+                p.set_value(data.payload);
+            }
+            if(connection->has_outgoing_data()){//5
+                outgoing_packet data=connection->top_of_outgoing_queue();
+                connection->send(data.payload);
+                data.promise.set_value(true);//6
+            }
+        }
+    }
+}
+```
+#### 4.2.4 为“期望”存储“异常”
+为期望存储异常两种常见机制  
+1. 常见任务 
+```
+double square_root(double x){
+    if(x< 0){
+        throw std::out_of_range("x<0");
+    }
+    return sqrt(x);
+}
+test(){
+    std::future<double> f=std::async(square_root,-1);
+    double y=f.get();//此处抛出异常，std::package_task任务也是这样的
+}
+```
+2. std::promise存储异常
+```
+extern std::promise<double> some_promise;
+try{
+    some_promise.set_value(calculate_value());
+}catch(...){
+    some_promise.set_exception(std::current_exception());//current_exception来检索抛出的异常，也可以用std::copy_exception（）创建一个新的异常
+}
+```
+demo(等待一次性事件)  
+```
+//
+// Created by RS on 2019/2/19.
+//
+#ifndef CONACTION_DEMO410_H
+#define CONACTION_DEMO410_H
+#include <thread>
+#include <future>
+#include "../Abstruct.h"
+#include <stdlib.h>
+#include <iostream>
+class Demo410 : public Abstruct{
+public:
+    void run() override{
+        Demo410 de;
+        de.manthread();
+    }
+    Demo410(){
+        std::thread t([&]{//数据提供者
+                auto slint=rand();
+                std::this_thread::sleep_for(std::chrono::seconds(slint%3));
+                dataPro.set_value(slint);
+        });
+        t.join();
+    }
+    void manthread(){//消费者
+            auto data=dataPro.get_future();
+            try {
+                std::cout<<"消费者:"<<data.get()<<std::endl;
+            }catch (std::exception& e){
+                std::cout<<e.what()<<std::endl;
+            }
+    }
+
+private:
+    std::promise<int> dataPro;
+};
+#endif //CONACTION_DEMO410_H
+```
+#### 4.2.5 多个线程的等待
+需要注意std::future<>是一个等待一次性的事件。那么当多个线程等待同一个事件时？（std::future是只移动的）。。。。。但是需要注意std::shared_future是可拷贝的。
+std::future并不是线程安全的。
+
+demo   
+```
+#ifndef CONACTION_DEMO4101_H
+#define CONACTION_DEMO4101_H
+#include <future>
+#include <iostream>
+#include "../Abstruct.h"
+/**
+ * 多个线程共享future
+ */
+class Demo4101 : public Abstruct{
+public:
+    void run() override{
+        Demo4101 demo4101;
+        demo4101.threadmuti();
+    }
+    Demo4101(){
+        ready_future=data.get_future().share();
+        std::thread t([=]{
+            data.set_value(234);
+        });
+        t.detach();
+    }
+    void threadmuti(){
+        for(int i=0;i<9;i++){
+            std::thread t([=]{
+//                ready_future.wait();
+               std::cout<<std::this_thread::get_id()<<":"<< ready_future.get()<<std::endl;
+            });
+            t.join();
+        }
+    }
+private:
+    std::promise<int> data;
+    std::shared_future<int> ready_future;
+};
+#endif //CONACTION_DEMO4101_H
+```
 ### 4.3 限定等待时间
+两种常见的超时方式1，“时延”（时间间隔）。2绝对超时（时间点）。  
+其中在等待一个时间的（条件变量中）具有的wait_for()与wait_until()成员函数都具有等待机制。
+#### 4.3.1 时钟
+时钟包含了四种不同的信息：  
+* 现在时间
+* 时间类型
+* 时钟节拍
+* 通过时钟节拍分布判断时钟是否稳定(特别需要注意当计算性能时最好使用std::chrono::steady_clock来度量时间间隔)    
+
+时钟节拍：指的是1/x秒（在不同的硬件上有不同的值），由时钟周期决定。比如一个时钟周期有25个节拍的时钟节拍描述为：std::radio<1,25>   
+```
+//
+// Created by RS on 2019/2/19.
+//
+#ifndef CONACTION_TIMEUTILS_H
+#define CONACTION_TIMEUTILS_H
+#include "../Abstruct.h"
+#include <iostream>
+#include <chrono>
+#include "timeutils.h"
+#include <ctime>
+#include <iomanip>
+class timeutils: public Abstruct {
+public:
+    timeutils():start(std::chrono::steady_clock::now()){
+    }
+    void run() override{
+        timeutils t;
+        t.reset();
+        auto sys= std::chrono::system_clock::now();
+        std::time_t now=std::chrono::system_clock::to_time_t(sys);
+        std::cout << std::put_time(std::localtime(&now),"%F %T") << std::endl;
+        std::cout << t.getMic() << std::endl;
+        std::cout << t.getmill() << std::endl;
+    }
+    void reset(){
+        start=std::chrono::steady_clock::now();
+    }
+    uint64_t getmill(){
+        return std::chrono::duration_cast<std::chrono::milliseconds >(std::chrono::steady_clock::now()-start).count();
+    }
+    uint64_t getMic(){
+        return std::chrono::duration_cast<std::chrono::microseconds >(std::chrono::steady_clock::now()-start).count();
+    }
+private:
+    std::chrono::steady_clock::time_point  start;
+};
+#endif //CONACTION_TIMEUTILS_H
+```
+#### 4.3.2 时延
+主要通过std::chrono::duration< , >函数对时间进行处理，具有两个模板参数,第一个为类型（int/long/double/short），第二个为指定部分std::ratio<60,1>表示一分钟。例如将毫秒存在double中（std::chrono::duration< double,std::ratio< 1,1000>>）  
+>>  需要注意的是std::chrono::duration_cast<>(ms);采用的是截断而不是舍入的方式
+
+```
+std::future<int> f=std::async(some_task);
+if(f.wait_for(std::chrono::milliseconds(35))==std::future_status::ready){
+    do_something_with(f.get());
+}
+```
+1. std::future_status::deferred (期望任务延迟了)
+2. std::future_status::ready （期望状态该表）
+3. std::future_status::timeout (超时)
+
+#### 4.3.3 时间点
+主要通过std::chrono::time_point<,>类型对时间点进行处理。实例中第一个参数用来指定使用的时钟，第二个参数用来标识时间的计量单位（特化的std::chrono::duration<>）。例如你可以指定一个时间点std::chrono::time_point< std::chrono::system_clock,std::chrono::minutes> 
+```
+//
+// Created by RS on 2019/2/20.
+//
+#ifndef CONACTION_DEMO411_H
+#define CONACTION_DEMO411_H
+#include <condition_variable>
+#include <vector>
+#include <iostream>
+#include "../Abstruct.h"
+/**
+ * 等待一个具有超时功能的条件变量
+ * 这里使用生产者消费者模型,一个生产者，多个消费者
+ */
+class Demo411 : public Abstruct {
+public:
+    Demo411() {
+        tpro = new std::thread([=] {//生产者
+            while (true) {
+                std::lock_guard<std::mutex> lk(m);
+                auto res = std::rand();
+                cv.notify_one();
+                ve.push_back(res);
+            }
+        });
+    }
+    ~Demo411() {
+        if (tpro != nullptr) {
+            if (tpro->joinable()) {
+                tpro->join();
+            }
+        }
+    }
+    void run() override {
+        Demo411 de;
+        de.waitLoop();
+    }
+    void waitLoop() {//消费者
+        auto const timeout = std::chrono::steady_clock::now() + std::chrono::milliseconds(1);
+        std::unique_lock<std::mutex> lk(m);
+        while (true) {
+            if (cv.wait_until(lk, timeout) == std::cv_status::no_timeout) {
+                auto res = ve.back();
+                std::cout << std::this_thread::get_id() << ":" << res << std::endl;
+                if (res % 10 == 3) {
+                    break;
+                }
+                ve.pop_back();
+            } else {
+                std::cout << "time out" << std::endl;
+                continue;
+            }
+        }
+    }
+private:
+    std::thread *tpro;
+    std::vector<int> ve;
+    std::mutex m;
+    std::condition_variable cv;
+};
+#endif //CONACTION_DEMO411_H
+```
+#### 4.3.4 具有超时功能的函数
+使用超时的最简单方式就是，对一个特定线程添加一个延迟处理；当这个线程无所事事时，就不会占用可供其他线程处理的时间.
+1. std::this_thread::sleep_for()与std::this_thread::sleep_until()  
+2. 条件变量与期望配合使用    
+
+其实锁也具有超时功能  
+需要注意并不是所有的互斥锁都支持超时，如std::mutex与std::recursive_mutex就不支持超时锁。但是std::timed_mutex和std::recursive_timed_mutex支持。这两种类型也有try_lock_for()和try_lock_until()成员函数，可以在一段时间内尝试，或在指定时间点前获取互斥锁。  
+| 类型                                                   | 函数                                                                             | 返回值                                                                                                                                                                              |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| std::this_thread[namespace]                            | sleep_for(duration) <br/> sleep_until(time_point)                                | N/A                                                                                                                                                                                 |
+| std::condition_variable或std::condition_variable_any   | wait_for(lock,duration)<br/>wait_until(lock,time_point)<br/>                     | std::cv_status::time_out<br/>std::cv_status::no_timeout                                                                                                                             |
+| std::condition_variable或std::condition_variable_any   | wait_for(lock,duration,predicate)<br/>wait_until(lock,time_point,predicate)<br/> | bool-当唤醒时，返回谓词的结果                                                                                                                                                       |
+| std::timed_mutex或std::recursive_timed_mutex           | try_lock_for(duration)<br/>try_lock_until(time_point)                            | bool -获取锁时返回ture ,否则返回false                                                                                                                                               |
+| std::unique_lock<TimedLockable>                        | unique_lock(lockable,duration)<br/>unique_lock(lockable,time_point)              | 当获取锁时返回true否则返回false                                                                                                                                                     |
+| std::unique_lock<TimedLockable>                        | try_lock_for(duration)<br/>try_lock_until(time_point)                            | 当获取锁时返回true否则返回false                                                                                                                                                     |
+| std::future< ValueType>或std::shared_future<ValueType> | wait_for(duration)<br/>wait_until(time_point)                                    | 当等待超时时，返回std::future_status::timeout.<br/>当“期望”准备返回就绪时，返回std::future_status::ready<br/>当“期望”持有一个为启动的延迟函数，返回std::future_status::deferred |
+现在，我们讨论的机制有：条件变量、“期望”、“承诺”还有打包的任务。是时候从更高的角度去看待这些机制，怎么样使用这些机制，简化线程的同步操作。
 ### 4.4 使用同步操作简化代码
+同步工具的使用在本章称为构建块，你可以只关注那些需要同步的操作。而非具体的机制。
+#### 4.4.1 使用期望的函数化编程function project(FP)
+函数化编程其实就是将函数的模块功能化，使其不依赖于外部传入的数据。如sin/cons/tan等。
+比如函数化的快排算法  
+![FP-模式的递归算法](./images/42.png)  
+```
+#include "Demo412.h"
+#include <list>
+#include <iostream>
+#include <algorithm>
+
+template <typename T>
+std::list<T> sequential_quick_sort(std::list<T> input){//如input 5,7,3,4,1,9,2,8,10,6
+    if(input.empty()){
+        return input;
+    }
+    std::list<T> result;
+    result.splice(result.begin(),input,input.begin());//1移动元素
+    T const& pivot=*result.begin();//2为了避免使用过多的拷贝，这里使用引用 5
+    auto divide_point=std::partition(input.begin(),input.end(),[&](T const& t){return t<pivot;});//3找到分割点--有多少个元素比他小 9
+    std::list<T> lower_part;
+    lower_part.splice(lower_part.end(),input,input.begin(),divide_point);//4//移动小的那一部分到lower_part
+    auto new_lower(sequential_quick_sort(std::move(lower_part)));//5递归小的那一部分
+    auto new_higher(sequential_quick_sort(std::move(input)));//递归大的那一部分
+    result.splice(result.end(),new_higher);//result中只有一个中间值，后边添加高的块
+    result.splice(result.begin(),new_lower);//result中前面移动排好序的（经过递归)的数据
+    return result;
+}
+void Demo412::run() {
+    std::list<int> a{5,7,3,4,1,9,2,8,10,6};
+    a=sequential_quick_sort<int>(a);
+    for(auto i:a){
+        std::cout<<i<<std::endl;
+    }
+}
+```
+future版本--利用多个线程async  
+```
+//
+// Created by RS on 2019/2/20.
+//
+
+#include "Demo412.h"
+#include "../othertest/timeutils.h"
+#include <list>
+#include <iostream>
+#include <algorithm>
+#include <future>
+#include <sstream>
+template<typename T>
+std::list<T> sequential_quick_sort(std::list<T> input) {//如input 5,7,3,4,1,9,2,8,10,6
+    if (input.empty()) {
+        return input;
+    }
+    std::list<T> result;
+    result.splice(result.begin(), input, input.begin());//1移动元素
+    T const &pivot = *result.begin();//2为了避免使用过多的拷贝，这里使用引用 5
+    auto divide_point = std::partition(input.begin(), input.end(),
+                                       [&](T const &t) { return t < pivot; });//3找到分割点--有多少个元素比他小 9
+    std::list<T> lower_part;
+    lower_part.splice(lower_part.end(), input, input.begin(), divide_point);//4//移动小的那一部分到lower_part
+    auto new_lower(sequential_quick_sort(std::move(lower_part)));//5递归小的那一部分
+    auto new_higher(sequential_quick_sort(std::move(input)));//递归大的那一部分
+
+    result.splice(result.end(), new_higher);//result中只有一个中间值，后边添加高的块
+    result.splice(result.begin(), new_lower);//result中前面移动排好序的（经过递归)的数据
+    return result;
+
+}
+
+template<typename T>
+std::list<T> parallel_quick_sort(std::list<T> input) {
+    if (input.empty()) {
+        return input;
+    }
+    std::list<T> result;
+    result.splice(result.begin(), input, input.begin());
+    T const &pivot = *result.begin();
+    auto divide_point = std::partition(input.begin(), input.end(), [&](const T &valu) { return valu < pivot; });
+    std::list<T> lowPart;
+    lowPart.splice(lowPart.end(), input, input.begin(), divide_point);
+    std::future<std::list<T> > newLow = std::async(&parallel_quick_sort<T>, std::move(lowPart));
+//    std::future<std::list<T>> newHigh = std::async(&parallel_quick_sort<T>, std::move(input));
+ auto newHigh=parallel_quick_sort<T>(std::move(input));
+    result.splice(result.begin(), newLow.get());
+    result.splice(result.end(), newHigh);
+//    result.splice(result.end(), newHigh.get());
+    return result;
+}
+/**
+ * 这里可以看出并不是线程越多越快
+ */
+void Demo412::run() {
+    std::list<int> a{5, 7, 3, 4, 1, 9, 2, 8, 10, 6,2,23,324,534,5,34,534,5,12,345,34,534,534,234,12332,1,12,12,87,34,5,445,4,4,56,56,567,67,6776,6767,32,534,5,34,53,5,34,5,};
+    for (int i = 0; i < 1000; ++i) {
+        a.push_back(rand());
+    }
+    uint64_t mi=0;
+    timeutils t;
+    t.reset();
+    auto b = sequential_quick_sort<int>(a);
+    mi= t.getMic();
+    std::cout<<mi<<std::endl;
+    t.reset();
+    auto c = parallel_quick_sort<int>(a);
+    mi= t.getMic();
+    std::cout<<mi<<std::endl;
+    std::stringstream ss1;
+    std::stringstream ss2;
+    for (auto i:b) {
+        ss1<<i;
+    }
+    std::cout<<std::endl;
+    for (auto i:c) {
+        ss2<<i;
+    }
+    if(ss1.str()==ss2.str()){
+        std::cout<<"ture"<<std::endl;
+    }
+}
+```
+future 方式2-std::packaged_task 方式的实现   
+```
+template<typename F,typename A>
+ auto  spawn_task(F&& f,A&& a)-> std::future<typename std::result_of<F(A&&)>::type>
+{
+    typedef std::result_of<F(A&&)>::type result_type;
+    std::packaged_task<result_type(A&&)>   task(std::move(f));
+    std::future<result_type> res(task.get_future());
+    std::thread t(std::move(task),std::move(a));
+    t.detach();
+    return res;
+}
+template<typename T>
+std::list<T> packaged_quick_sort(std::list<T> input) {
+    if (input.empty()) {
+        return input;
+    }
+    std::list<T> result;
+    result.splice(result.begin(), input, input.begin());
+    T const &pivot = *result.begin();
+    auto divide_point = std::partition(input.begin(), input.end(), [&](const T &valu) { return valu < pivot; });
+    std::list<T> lowPart;
+    lowPart.splice(lowPart.end(), input, input.begin(), divide_point);
+    std::future<std::list<T> > newLow = spawn_task(&parallel_quick_sort<T>, std::move(lowPart));
+//    std::future<std::list<T>> newHigh = std::async(&parallel_quick_sort<T>, std::move(input));
+    auto newHigh=parallel_quick_sort<T>(std::move(input));
+    result.splice(result.begin(), newLow.get());
+    result.splice(result.end(), newHigh);
+//    result.splice(result.end(), newHigh.get());
+    return result;
+}
+```
+
+packaged_task与async分析  
+packaged_task可以与任务队列进行添加任务。一般需要为函数结果创建一个std::packaged_task对象，可以从这个对象中获取期望，或在线程中执行它，返回期望。其本身并不提供太多的好处（并且事实上会造成大规模超额任务），但是他会为转型一个更复杂的实现铺平道路，例如实现要给想队列中添加任务，而后使用线程池的方式来运行他们。当然async更适合与你知道你在干什么，并且要完全控制在线程池中构建或者执行过任务的线程。  
+函数化编程可算作是并发编程的范型；并且也是通讯顺序进程(CSP,Communicating Sequential Processer[3],)的范型，这里线程理论上是完全分开的，也就是没有共享数据，但是有通讯通道允许信息在不同线程间进行传递。这种范型被Erlang语言所采纳，并且在MPI(Message Passing Interface，消息传递接口)上常用来做C和C++的高性能运算。  
+#### 4.4.2 使用消息传递的同步操作
+真正通讯顺序处理是没有共享数据的，所有消息都是通过消息队列传递，但是因为C++线程共享一块地址空间，所以达不到真正通讯顺序处理的要求。这里就需要有一些约定了：作为一款应用或者是一个库的作者，我们有责任确保在我们的实现中，线程不存在共享数据。当然，为了线程间的通信，消息队列是必须要共享的，具体的细节可以包含在库中。   
+![银行卡状态机](./images/44.png)  
+
+
 ### 4.5 本章总结
+本章主要讨论了各式各样的同步操作,从基本的条件变量,到期望承诺,再到打包任务.  
 ## 5 c++内存模型和对原子类型的操作
+>> * C++11内存模型
+>> * 标准库提供的原子类型
+>> * 使用各种原子类型
+>> * 原子操作实现线程同步功能
+
+C++11中具有一个多线程感知内存模型.这种内存模型支持C++11中的同步操作,并将其封装在底层,C++是一个系统级别的编程语言,标准委员会的目标之一就是不需要比c++还要底层的高级语言.  
+
+### 5.1 内存模型基础
+主要包含两个方面
+1. 基本结构:与事务在内存中的布局有关
+2. 并发 
+
+#### 5.1.1 对象和内存位置
+在一个c++程序中所有数据都是由对象组成,与其他语言不同,c++中对象仅仅是C++数据构建块的一个声明.  
+无论对象是一个怎样的类型,一个对象都会存储在一个或者多个内存位置上,每一个内存位置不是一个标量类型的对象,就是一个标量类型的子对象.  
+例如下面结构体
+!["struct对象分解"](./images/51.png)  
+需要记住4个原则:
+1. 每一个变量都是一个对象,包括作为其成员变量的对象. 
+2. 每个对象至少占有一个内存位置
+3. 基本类型都有确定的内存位置(无论类型大小如何,即使他们是相邻的,或是数组的一部分)
+4. 相邻位域是相同内存中的一部分
+   
+#### 5.1.3 对象,内存位置和并发
+为了避免条件竞争,两个线程就需要一定的执行顺序,当多于两个线程访问同一个内存地址时,对每隔访问这都需要定义一个顺序
+>> 当程序中对同一内存地址中的数据访问存在竞争时,你可以使用原子操作来避免未定义的行为.当然,这不会影响竞争的产生.原子操作并没有指定访问顺序,但原子操作把程序拉回了定义行为的区域.  
+
+#### 5.1.4 修改顺序
+在C++程序中的对象都有确定好的修改顺序,这个顺序不同于执行中的顺序,但是在给定的执行程序中所有线程都需要准守这个顺序.
+1. 如果对象不是一个原子类型,你必须确保有足够的同步操作.
+2. 如果你使用原子操作,编译器就有责任替你做必要的同步
+
+### 5.2 c++ 中的原子操作和原子类型
+原子操作是个不可分割的操作。 在系统的所有线程中，你是不可能观察到原子操作完成了一半这种情况的； 它要么就是做了，要么就是没做，只有这两种可能。  
+#### 5.2.1 标准原子类型
+标准原子类型定义在头文件< atomic> 中。这些类型上的所有操作都是原子的，在语言定义中只有这些类型的操作是原子的，不过你可以用互斥锁来模拟原子操作。  
+实际上,标准的原子类型自己的实现:它们都有一个(几乎)is_lock_free()成员函数,该函数可以查询某原子类型的操作是使用的原子指令还是编译器和库内部用了一个锁.  
+1. std::atomic_flag类型不提供is_lock_free成员函数.,该类型是一个简单的布尔标志:当你有一个简单无锁的布尔标志时,你可以使用其实现一个简单的锁,并且实现其他基础的原子类型.(基本使用原则是cas与clear)  
+2. 其他的原子类型可以通过std::atomic< >类型模版而访问到,并且拥有更多的功能,但可能不都是无锁的.  
+3. 可以使用下表中的原子类型集,同一程序中使用2或者3方案中的任意一种即可.
+
+| 标准原子类型的备选名3 | 相关std::atomic< >特化类2 | 标准原子类型的备选名3 | 相关std::atomic< >特化类2        |
+| :-------------------- | :------------------------ | :-------------------- | :------------------------------- |
+| 原子类型              | 相关特化类                | 原子类型              | 相关特化类                       |
+| atomic_bool           | std::atomic< bool>        | atomic_char           | std::atomic< char>               |
+| atomic_schar          | std::atomic< signed char> | atomic_uchar          | std::atomic< unsigned char>      |
+| atomic_int            | std::atomic< int>         | atomic_uint           | std::atomic< unsigned>           |
+| atomic_short          | std::atomic< short>       | atomic_ushort         | std::atomic< unsigned short>     |
+| atomic_long           | std::atomic< long>        | atomic_ulong          | std::atomic< unsigned long>      |
+| atomic_llong          | std::atomic< long long>   | atomic_ullong         | std::atomic< unsigned long long> |
+| atomic_char16_t       | std::atomic< char16_t>    | atomic_char32_t       | std::atomic< char32_t>           |
+| atomic_wchar_t        | std::atomic< wchar_t>     |                       |                                  |
+
+C++标准库不仅提供了基本原子类型,还定义了与原子类型对应的非原子类型
+| 原子类型定义         | 标准库中相关类型定义 | 原子类型定义          | 标准库中相关类型定义 |
+| :------------------- | :------------------- | :-------------------- | :------------------- |
+| atomic_int_least8_t  | int_least8_t         | atomic_uint_least8_t  | uint_least8_t        |
+| atomic_int_least16_t | int_least16_t        | atomic_uint_least16_t | uint_least16_t       |
+| atomic_int_least32_t | int_least32_t        | atomic_uint_least32_t | uint_least32_t       |
+| atomic_int_least64_t | int_least64_t        | atomic_uint_least64_t | uint_least64_t       |
+| atomic_int_fast8_t   | int_fast8_t          | atomic_uint_fast8_t   | uint_fast8_t         |
+| atomic_int_fast16_t  | int_fast16_t         | atomic_uint_fast16_t  | uint_fast16_t        |
+| atomic_int_fast32_t  | int_fast32_t         | atomic_uint_fast32_t  | uint_fast32_t        |
+| atomic_int_fast64_t  | int_fast64_t         | atomic_uint_fast64_t  | uint_fast64_t        |
+| atomic_intptr_t      | intptr_t             | aotmic_uintptr_t      | uintptr_t            |
+| atomic_size_t        | size_t               | atomic_ptrdiff_t      | ptrdiff_t            |
+| atomic_intmax_t      | intmax_t             | atomic_uintmax_t      | uintmax_t            |
+
+std::atomic< >类模板不仅仅一套特化的类型,其作为一个原发模板也可以使用用户定义类型创建对应的原子变量.因为是一个通用类模板,操作被限制为load( )store( )(赋值和转换为用户类型),exchage(),compare_exchange_weak()和compare_exchage_strong().  
+每种函数类型的操作都有一个可选内存排序参数,这个参数可以用来指定所需存储的顺序.,以上操作分为三类:  
+1. store操作,可选如下顺序:memory_order_relaxed,memory_order_release,memory_order_seq_cst
+2. load操作,可选如下顺序:memory_order_relaxed,memory_order_consumer,memory_order_acquire,memory_order_seq_cst.
+3. Read-modify-write(读改写操作),可选如下顺序:memory_order_relaxed,memory_order_consume,memory_order_acquire,memory_order_release,memory_order_acq_rel,memory_order_seq_cst.
+
+所有操作默认的顺序都是memory_order_seq_cst.
+#### 5.2.2 std::atomic_flag的相关操作
+std::atomic_flag是最简单的标准原子类型,它表示了一个布尔标志.这个类型可以在两个状态间切换:设置和清除.    
+>> 给类型必须被ATOMIC_FLAG_INIT初始化为清除状态
+
+```
+std::atomic_flag f=ATOMIC_FLAG_INIT;
+```
+该对象只能做三种事情:销毁-clear(),清除或设置(查询之前的值)-test_and_test().clear和test_and_set成员函数可以指定好内存顺序.clear()是一个存储操作.所以不能有memory_order_acuire或memory_order_acq_rel语义.但test_and_set是一个读改写操作.所有可以应用于任何内存顺序标签.  
+
+>> std::atomic_flag对象是不能拷贝和赋值进行构造的.  
+
+```
+#ifndef CONACTION_SPINLOCK_MUTEX_H
+#define CONACTION_SPINLOCK_MUTEX_H
+#include <atomic>
+/**
+ * 使用std::atomic_flag实现自旋互斥锁
+ */
+class spinlock_mutex {
+    std::atomic_flag flag;
+public:
+    spinlock_mutex():flag(ATOMIC_FLAG_INIT){}
+    void lock(){
+        while(flag.test_and_set(std::memory_order_acquire));
+    }
+    void unlock(){
+        flag.clear(std::memory_order_release);
+    }
+};
+#endif //CONACTION_SPINLOCK_MUTEX_H
+```
+>> 由于std::atomic_flag局限性太强,因为它没有非修改查询操作,它甚至不能像普通的布尔标志那样使用.所以最好使用std::atomic< bool>,接下来让我们看看如何使用它.  
+
+#### 5.2.3 std::atomic的相关操作
+最基本的原子整型类型就是std::atomic< bool>.如你所料,它有着比std::atomic_flag更加齐全的布尔标志特性.虽然它依旧不能拷贝构造和拷贝赋值,但是你看可以使用一个非原子的bool类型构造它
+```
+std::atomic< bool> b(true);
+b=false;
+```
+>> store是一个存储操作,而load()是一个加载操作.exchange()是一个"读-改-写"操作
+
+```
+std::atomic< bool>b;
+bool x=b.load(std::memory_order_acquire);
+b.stroe(true);
+x=b.exchage(false,std::memory_order_acq_rel);
+```
+**存储一个新值(或旧值)取决于当前值**
+它的形式表现为compare_exchage_weak()和compare_exchange_strong()成员函数.
+因为compare_exchange_weak()可以"伪失败",所以通常使用这样的模板
+```
+bool expected=false;
+extern atomic<bool> b;
+while(!b.compare_exchagne_weak(expected,true)&&! expected);
+```
+
+#### 5.2.4 std::atomic:指针运算
+#### 5.2.4 标准的原子整形的相关操作
+#### 5.2.4 std::atomic< >主要类的模版
+#### 5.2.4 原子操作的释放函数
+
+
+### 5.3 同步操作和强制顺序
+### 5.4 总结
+
 ## 6 设计基于锁的并发数据结构
+>> * 并发数据结构设计的意义
+>> * 如何设计
+>> * 实现为并发设计的数据结构
+### 6.1 为并发设计的意义
+设计并发数据结构意味着多个线程可以并发的访问这个数据结构,线程可对这个数据结构做相同或者不同的操作,并且每一个线程都能在自己的自治域中看到该数据结构.且在多线程环境下,无数据丢失和损坏,所有的数据需要维持原样,且无条件竞争.这样的数据结构称之为线程安全的数据结构.
+**数据结构并发设计的指导与建议**
+设计并发数据结构需要有两个方面的考量一是确保访问是安全的,二是能真正的并发访问.   
+需要考虑的问题
+1. 锁的范围中的操作,是否允许在所外进行?
+2. 数据结构中的不同区域是否能被不同的互斥量所保护?
+3. 所有操作都需要同级互斥量保护?
+4. 能否对数据结构进行简单的修改,以增加爱并发访问的概率,且不影响操作语义?
+
+这些问题都源于一个指导思想:如何让序列化访问最小化,让真实并发最大化.
+### 6.2 基于锁的并发数据结构
+设计一些简单的数据结构:使用互斥量和锁的方式来保护数据.  
+#### 6.2.1 线程安全的栈
+```
+#ifndef CONACTION_THREADSAFE_STACK_H
+#define CONACTION_THREADSAFE_STACK_H
+#include <exception>
+#include <stack>
+#include <mutex>
+struct empty_stack: std::exception{
+    const char *what() const override {
+        return exception::what();
+    }
+};
+using  GuardLock=std::lock_guard<std::mutex>;
+template <class T>
+class threadsafe_stack {
+private:
+    std::stack<T> data;
+    mutable std::mutex m;
+public:
+    threadsafe_stack()= default;
+    threadsafe_stack(const threadsafe_stack& other){
+        GuardLock lock(other.m);
+        data=other.data;
+    }
+    threadsafe_stack&operator=(const threadsafe_stack& )= delete;
+    void push(T new_value){
+        GuardLock lock(m);
+        data.push(std::move(new_value));
+    }
+    std::shared_ptr<T> pop(){
+        GuardLock lock(m);
+        if(data.empty()) throw empty_stack();
+        std::shared_ptr<T> const res(std::make_shared<T>(std::move(data.top())));
+        data.pop();
+        return  res;
+    }
+    void pop(T& value){
+        GuardLock  lock(m);
+        if(data.empty()) throw empty_stack();
+        value=std::move(data.top());
+        data.pop();
+    }
+    bool empty()const{
+        GuardLock  lock(m);
+        return data.empty();
+    }
+};
+#endif //CONACTION_THREADSAFE_STACK_H
+```
+#### 6.2.2 线程安全队列-使用锁和条件变量
+线程安全队列
+```
+#ifndef CONACTION_THREADSAFE_QUEUE2_H
+#define CONACTION_THREADSAFE_QUEUE2_H
+
+#include <mutex>
+#include <queue>
+/**
+ * 使用智能指针的方式主要是避免在std::shared_ptr 创建的时候抛出异常或者内存申请失败的情况.将只能指针的创建放在push过程中
+ * @tparam T
+ */
+template <typename T>
+class threadsafe_queue2 {
+    using GuardLock=std::lock_guard<std::mutex>;
+    using UniqueLock=std::unique_lock<std::mutex>;
+private:
+    mutable std::mutex mut;
+    std::queue<std::shared_ptr<T>> data_queue;
+    std::condition_variable data_cond;
+public:
+    void wait_and_pop(T& value){
+        UniqueLock lk(mut);
+        data_cond.wait(mut,[=]{
+            return! data_queue.empty();
+        });
+        value=std::move(*data_queue.front());//1这里的引用需要解引用才可以得到其引用
+        data_queue.pop();
+    }
+    bool try_pop(T& value){
+        GuardLock lk(mut);
+        if(data_queue.empty()){
+            return false;
+        }
+        value=std::move(*data_queue.front());//2这里的引用需要解引用才可以得到其引用
+        data_queue.pop();
+        return  true;
+    }
+    std::shared_ptr<T> wait_and_pop(){
+        UniqueLock lk(mut);
+        data_cond.wait(mut,[=]{return !data_queue.empty();});
+        auto res=data_queue.front();//3
+        data_queue.pop();
+        return res;
+    }
+    std::shared_ptr<T> try_pop(){
+        GuardLock lk(mut);
+        if(data_queue.empty())
+            return std::shared_ptr<T>();
+        auto res=data_queue.front();//4
+        data_queue.pop();
+        return res;
+    }
+    void push(T newValue){
+        std::shared_ptr<T> data(std::make_shared(std::move(newValue)));//5
+        GuardLock  lk(mut);
+        data_queue.push(data);
+        data_cond.notify_one();
+    }
+    bool empty()const{
+        GuardLock lk(mut);
+        return data_queue.empty();
+    }
+};
+
+
+#endif //CONACTION_THREADSAFE_QUEUE2_H
+```
+#### 6.2.3 线程安全队列-使用细粒度锁和条件变量
+使用一个互斥量对一个数据队列进行保护,为了使用细粒度锁,需要看一下队列内部的组成结构,并且讲一个互斥量与每个数据相关联.  
+
+
+### 6.3 基于锁设计更加复杂的数据结构
+### 6.4 小结
 ## 7 设计无锁并发数据结构
 ## 8 设计并发代码
 ## 9 线程管理强化

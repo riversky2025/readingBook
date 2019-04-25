@@ -6,8 +6,11 @@
 #define CODE_STARTDEMO19_H
 
 
-class StartDemo19 {
+#include "../RunTest.h"
 
+class StartDemo19 : public RunTest{
+public:
+    void run() override;
 };
 
 

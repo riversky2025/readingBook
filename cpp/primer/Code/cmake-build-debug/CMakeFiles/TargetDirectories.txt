@@ -1,0 +1,3 @@
+H:/readingBook/cpp/primer/Code/cmake-build-debug/CMakeFiles/Code.dir
+H:/readingBook/cpp/primer/Code/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/readingBook/cpp/primer/Code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
