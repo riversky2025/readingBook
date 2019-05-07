@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>路由的基本使用</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script src="../lib/vue-router-3.0.1.js"></script>
+    <style>
+        .router-link-active,
+        .myactive {
+            color: red;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 10px;
+            text-decoration: underline;
+            background-color: green
+        }
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(140px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <router-link to="/login" tag="span"> 登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <transition mode='out-in'>
+
+            <router-view></router-view>
+        </transition>
+    </div>
+    <script>
+        var login = {
+            template: "<h1>登录组件</h1>"
+        }
+        var register = {
+            template: "<h1>注册组件</h1>"
+        }
+        const routerOjb = new VueRouter({
+            routes: [
+                { path: '/', redirect: 'login' },
+                { path: '/login', component: login },
+                { path: '/register', component: register }
+            ],
+            // linkActiveClass: 'myactive'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'test'
+            },
+            router: routerOjb// 将路由规则对象，注册到 vm 实例上，用来监听 URL 地址的变化，然后展示对应的组件
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组建交互</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        {{datamsgFormSon}}
+        <!-- 通过v-on绑定方法 @ -->
+        <com2 @func="show"></com2>
+    </div>
+    <template id="tmpl">
+        <div>
+            <h1>这是 子组件</h1>
+            <input type="button" value="这是子组件中的按钮 - 点击它，触发 父组件传递过来的 func 方法" @click="myclick">
+        </div>
+    </template>
+    <script>
+        var com2 = {
+            template: "#tmpl",
+            data() {
+                return {
+                    sonmsg: { name :'小头', age: 6 }
+                }
+            }, methods: {
+                myclick() {
+                    this.$emit('func', this.sonmsg)//通过该方式调用父组件,然后修改值
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                datamsgFormSon: null
+            },
+            components: {
+                com2,
+            },
+            methods: {
+                show(data) {
+                    this.datamsgFormSon=data
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

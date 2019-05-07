@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1 :style="[styleObj1,styleObj2]">HzheliSH是的</h1>
+    </div>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'test',
+                styleObj1:{color:'red','font-weight':200},
+                styleObj2:{'front-style':'italic'}
+            }
+        })
+    </script>
+</body>
+
+</html>

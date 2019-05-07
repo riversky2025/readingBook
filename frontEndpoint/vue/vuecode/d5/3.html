@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mode数据推算</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <input v-model="firstname" type="text" @keyup="getFullName" />
+        <input v-model="lastname" type="text" @keyup="getFullName" />
+        <input v-model="fullname" type="text" />
+
+        <br>
+        <input v-model="fullname2" type="text" />
+<br>
+<input v-model="compuFullName" type="text" />
+    </div>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                firstname:'',
+                lastname:"",
+                fullname:"",
+                fullname2:''
+            },
+            watch: {// 使用这个 属性，可以监视 data 中指定数据的变化，然后触发这个 watch 中对应的 function 处理函数
+                'firstname'(newVal, oldValue) {
+                    this.fullname2=newVal+'-'+this.lastname
+                },
+                'lastname'(newf,ols){
+                    this.fullname2 = this.firstname + '-' + newf
+                }
+            },
+            computed: {
+                compuFullName() {
+                    return this.firstname+"--"+ this.lastname
+                }
+            },
+            methods: {
+                getFullName() {
+                    this.fullname= this.firstname+"--"+ this.lastname
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

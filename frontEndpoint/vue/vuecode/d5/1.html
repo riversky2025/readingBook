@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件传值</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <chle @func="getFromChild" v-bind:parentmsg='msg'></chle>
+    </div>
+
+    <script>
+        var chle={
+            template:"<div>{{msgchile}}----{{parentmsg}} <input type=\"button\" value='向父组件传递' @click='sendMsg'/></div>",
+            data() {
+                return {
+                    msgchile: "child 数据"
+                }
+            },
+            props:['parentmsg'],
+            methods: {
+                sendMsg() {
+                    this.$emit('func',this.msgchile)
+                }
+            },
+        }
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'test'
+            },
+            methods: {
+                getFromChild(ms) {
+                    this.msg=ms
+                }
+            },
+            components: {
+                chle,
+            }
+        })
+    </script>
+</body>
+
+</html>     

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改v-前缀</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        /* v-enter-active 【入场动画的时间段】 */
+        /* v-leave-active 【离场动画的时间段】 */
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(70px)
+        }
+
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="button" value="toggle" @click="flag=!flag">
+        <transition>
+            <h3 v-if="flag">这是一个</h3>
+        </transition>
+        <hr>
+        <input type="button" value="toggle2" @click="flag2=!flag2">
+        <transition name=my>
+            <h6 v-if="flag2">这事一个H6</h6>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                flag2: false
+            }
+        })
+    </script>
+</body>
+
+</html>

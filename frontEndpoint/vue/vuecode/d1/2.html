@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+   
+    <style>
+        [v-cloak]{
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <p v-cloak>++++++++{{msg}}----------</p>
+        <h4 v-text="msg">============</h4>
+        <div>{{msg2}}</div>
+        <div v-text="msg2"></div>
+        <div v-html="msg2">1212</div>
+        <input type="button" value="按钮" @click="show">
+    </div>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'test',
+                msg2: '<h1>哈哈，我是一个大</h1>',
+            },
+            methods: {
+                show:function(){
+                    alert('hello')
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>路由嵌套</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script src="../lib/vue-router-3.0.1.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <router-link to="/account">Account</router-link>
+        <router-view></router-view>
+    </div>
+    <template id="accounTmp">
+        <div>
+            <h1>这是一个Account组件</h1>
+            <router-link to="/account/login">登录</router-link>
+            <router-link to="/account/register">注册</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+    <script>
+        var AccountCompn={
+            template:"#accounTmp"
+        }
+        var log={
+            template:"<h3>登录</h3>"
+        }
+        var reg={
+            template:"<h3>注册</h3>"
+        }
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/account',
+                    component:AccountCompn,
+                    children:[
+                        {path:'login',component:log},
+                        {path:'register',component:reg}
+                    ]
+                },
+                // {path:'/',redirect:"/account"}
+            ]
+        })
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'test'
+            },
+            router
+        })
+    </script>
+</body>
+
+</html> 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script src="../lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>Name:
+                    <input v-model="name" type="text" />
+                </label>
+                <input type="button" value="添加" @click="add">
+            </div>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        Vue.http.options.root = "";
+        Vue.http.options.emulateJSON = true;
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                list: [
+                ]
+            },
+            created () {
+                this.getAllList(3);
+            },
+            methods: {
+                getAllList(a) {
+                    for( i=0;i<a;++i){
+                        this.list.push({id:i,name:"ba"+i,ctime:new Date()});
+                    }
+                },
+                add(){
+                    this.list.push({id:this.list.length,name:this.name,ctime:new Date()});
+                },
+                del(id){
+                    var index = this.list.findIndex(item => {
+                        if (item.id == id) {
+                            return true;
+                        }
+                    })
+                    this.list.splice(id,1)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

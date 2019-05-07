@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件切换方式2</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="../lib/animate.css">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <a href="http://" @click.prevent="comName='login'">登录</a>
+        <a href="" @click.prevent="comName='register'">注册</a>
+        <transition  
+        enter-active-class="bounceIn" 
+        leave-active-class="bounceOut" 
+        :duration="{ enter: 200, leave: 400 }" mode=out-in>
+            <component class="animated" :is="comName"></component>
+        </transition>
+    </div>
+    <template id="t1">
+        <div>
+            登录
+        </div>
+    </template>
+    <template id="t2">
+        <div>
+        注册
+        </div>
+    </template>
+    <script>
+        Vue.component("login",{
+            template:"#t1"
+        })
+        Vue.component('register',{
+            template:"#t2"
+        })
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                comName:'login'
+            }
+        })
+    </script>
+</body>
+
+</html>

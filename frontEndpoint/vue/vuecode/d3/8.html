@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件创建1</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <mycom1></mycom1>
+        <com2></com2>
+        <mycom31></mycom31>
+    </div>
+    <div id="app2">
+            <login></login>
+    </div>
+    <template id="tem1">
+        <div>
+            <h1>通过template创建</h1>
+        </div>
+    </template>
+    <template id="tem2">
+        <div>
+            <h1>私有组件</h1>
+            
+        </div>
+    </template>
+    <script>
+        //方式1
+        var com2=Vue.extend({
+            template:'<div><h3>这是直接使用 Vue.component 创建出来的组件</h3><span>123</span></div>'
+        })
+        Vue.component("com2",com2)
+        //方式2
+        Vue.component('mycom1',Vue.extend({
+            template:'<h3>这时使用Vue.extend 创建的组件</h3>'
+        }))
+        Vue.component("mycom31",{
+            template:'#tem1'
+        })
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'test'
+            }
+        })
+        new Vue({
+            el:'#app2',
+            data: {
+                    key: true
+            },
+            components: {
+                login:{
+                    template:"#tem2"
+                },
+            }
+        })  
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <script src="../lib/vue-resource-1.3.4.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="button" value="get" @click="getInfo">
+        <input type="button" value="post" @click="postInfo">
+        <input type="button" value="jsop" @click="jsonpInfo">
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'test'
+            },
+            methods: {
+                getInfo() {
+                    // this.$http.get('http://vue.studyit.io/api/getlunbo').then((result)=>{
+                    //     console.log(result.body)
+                    // })
+                    this.$http.get('https://getman.cn/mock/my').then(function (result) {
+                        // 通过 result.body 拿到服务器返回的成功的数据
+                        console.log(result.body)
+                    })
+                },
+                postInfo() {
+                    this.$http.post('http://vue.studyit.io/api/post', {}, { emulateJSON: true }).then(result => {
+                        console.log(result.body)
+                    })
+                },
+                jsonpInfo() {
+                    this.$http.jsonp('http://vue.studyit.io/api/jsonp').then(result => {
+                        console.log(result.body)
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
