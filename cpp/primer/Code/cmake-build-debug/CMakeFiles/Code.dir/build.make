@@ -35,10 +35,10 @@ NULL=nul
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = D:\devsoft\Cmake\bin\cmake.exe
+CMAKE_COMMAND = D:\devsoft\CLion\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = D:\devsoft\Cmake\bin\cmake.exe -E remove -f
+RM = D:\devsoft\CLion\bin\cmake\win\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -61,95 +61,95 @@ include CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\main.cpp.obj: CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\main.cpp.obj: ..\main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Code.dir/main.cpp.obj"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Code.dir\main.cpp.obj /FdCMakeFiles\Code.dir\ /FS -c H:\readingBook\cpp\primer\Code\main.cpp
 <<
 
 CMakeFiles\Code.dir\main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Code.dir/main.cpp.i"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe > CMakeFiles\Code.dir\main.cpp.i @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe > CMakeFiles\Code.dir\main.cpp.i @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E H:\readingBook\cpp\primer\Code\main.cpp
 <<
 
 CMakeFiles\Code.dir\main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Code.dir/main.cpp.s"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Code.dir\main.cpp.s /c H:\readingBook\cpp\primer\Code\main.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo1.cpp.obj: CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\start1\StartDemo1.cpp.obj: ..\start1\StartDemo1.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Code.dir/start1/StartDemo1.cpp.obj"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Code.dir\start1\StartDemo1.cpp.obj /FdCMakeFiles\Code.dir\ /FS -c H:\readingBook\cpp\primer\Code\start1\StartDemo1.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Code.dir/start1/StartDemo1.cpp.i"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe > CMakeFiles\Code.dir\start1\StartDemo1.cpp.i @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe > CMakeFiles\Code.dir\start1\StartDemo1.cpp.i @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E H:\readingBook\cpp\primer\Code\start1\StartDemo1.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Code.dir/start1/StartDemo1.cpp.s"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Code.dir\start1\StartDemo1.cpp.s /c H:\readingBook\cpp\primer\Code\start1\StartDemo1.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo19.cpp.obj: CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\start1\StartDemo19.cpp.obj: ..\start1\StartDemo19.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Code.dir/start1/StartDemo19.cpp.obj"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Code.dir\start1\StartDemo19.cpp.obj /FdCMakeFiles\Code.dir\ /FS -c H:\readingBook\cpp\primer\Code\start1\StartDemo19.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo19.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Code.dir/start1/StartDemo19.cpp.i"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe > CMakeFiles\Code.dir\start1\StartDemo19.cpp.i @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe > CMakeFiles\Code.dir\start1\StartDemo19.cpp.i @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E H:\readingBook\cpp\primer\Code\start1\StartDemo19.cpp
 <<
 
 CMakeFiles\Code.dir\start1\StartDemo19.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Code.dir/start1/StartDemo19.cpp.s"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Code.dir\start1\StartDemo19.cpp.s /c H:\readingBook\cpp\primer\Code\start1\StartDemo19.cpp
 <<
 
 CMakeFiles\Code.dir\start1\Sales_item.cpp.obj: CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\start1\Sales_item.cpp.obj: ..\start1\Sales_item.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Code.dir/start1/Sales_item.cpp.obj"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Code.dir\start1\Sales_item.cpp.obj /FdCMakeFiles\Code.dir\ /FS -c H:\readingBook\cpp\primer\Code\start1\Sales_item.cpp
 <<
 
 CMakeFiles\Code.dir\start1\Sales_item.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Code.dir/start1/Sales_item.cpp.i"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe > CMakeFiles\Code.dir\start1\Sales_item.cpp.i @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe > CMakeFiles\Code.dir\start1\Sales_item.cpp.i @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E H:\readingBook\cpp\primer\Code\start1\Sales_item.cpp
 <<
 
 CMakeFiles\Code.dir\start1\Sales_item.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Code.dir/start1/Sales_item.cpp.s"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Code.dir\start1\Sales_item.cpp.s /c H:\readingBook\cpp\primer\Code\start1\Sales_item.cpp
 <<
 
 CMakeFiles\Code.dir\StringTest.cpp.obj: CMakeFiles\Code.dir\flags.make
 CMakeFiles\Code.dir\StringTest.cpp.obj: ..\StringTest.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Code.dir/StringTest.cpp.obj"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\Code.dir\StringTest.cpp.obj /FdCMakeFiles\Code.dir\ /FS -c H:\readingBook\cpp\primer\Code\StringTest.cpp
 <<
 
 CMakeFiles\Code.dir\StringTest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Code.dir/StringTest.cpp.i"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe > CMakeFiles\Code.dir\StringTest.cpp.i @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe > CMakeFiles\Code.dir\StringTest.cpp.i @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E H:\readingBook\cpp\primer\Code\StringTest.cpp
 <<
 
 CMakeFiles\Code.dir\StringTest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Code.dir/StringTest.cpp.s"
-	D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\cl.exe @<<
+	D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\cl.exe @<<
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\Code.dir\StringTest.cpp.s /c H:\readingBook\cpp\primer\Code\StringTest.cpp
 <<
 
@@ -172,8 +172,8 @@ Code.exe: CMakeFiles\Code.dir\StringTest.cpp.obj
 Code.exe: CMakeFiles\Code.dir\build.make
 Code.exe: CMakeFiles\Code.dir\objects1.rsp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=H:\readingBook\cpp\primer\Code\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable Code.exe"
-	D:\devsoft\Cmake\bin\cmake.exe -E vs_link_exe --intdir=CMakeFiles\Code.dir --manifests  -- D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\Code.dir\objects1.rsp @<<
- /out:Code.exe /implib:Code.lib /pdb:H:\readingBook\cpp\primer\Code\cmake-build-debug\Code.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
+	D:\devsoft\CLion\bin\cmake\win\bin\cmake.exe -E vs_link_exe --intdir=CMakeFiles\Code.dir --manifests  -- D:\vs\VC\Tools\MSVC\14.21.27702\bin\Hostx64\x64\link.exe /nologo @CMakeFiles\Code.dir\objects1.rsp @<<
+ /out:Code.exe /implib:Code.lib /pdb:H:\readingBook\cpp\primer\Code\cmake-build-debug\Code.pdb /version:0.0  /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<
 
 # Rule to build all files generated by this target.

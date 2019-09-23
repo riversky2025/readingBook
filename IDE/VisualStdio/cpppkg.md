@@ -277,3 +277,52 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=.../vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-windo
 # 7. 小结
 Vcpkg目前还在不断的完善中，但不可否认，它已经极大的减少了我们在项目启动时，准备第三方库的时间。提高了工作效率。按照时髦的话来说，就是避免了重复造轮子。目前Vcpkg已经集成了上百个常用的开源库，而且数量还在不停增长。毕竟是微软旗下的开源项目，质量还是可以得到保障的，完全可以在工业级项目中得以使用。源代码托管在github上，github社区很活跃，有兴趣的朋友也可以参与进来。
 
+# 常用库
+```
+vcpkg install  asio:x64-windows-static                       
+vcpkg install  asio:x86-windows                              
+vcpkg install  asio:x86-windows-static                       
+vcpkg install  c-ares:x64-windows-static                     
+vcpkg install  c-ares:x86-windows-static                     
+vcpkg install  catch2:x64-windows-static                     
+vcpkg install  catch2:x86-windows                            
+vcpkg install  catch2:x86-windows-static                     
+vcpkg install  cpp-redis:x64-windows-static                  
+vcpkg install  cpp-redis:x86-windows-static                  
+vcpkg install  cppzmq:x64-windows-static                     
+vcpkg install  cppzmq:x86-windows-static                     
+vcpkg install  fmt:x64-windows-static                        
+vcpkg install  fmt:x86-windows-static                        
+vcpkg install  grpc:x64-windows-static                       
+vcpkg install  grpc:x86-windows-static                       
+vcpkg install  jemalloc:x64-windows-static                   
+vcpkg install  jsoncpp:x86-windows-static                    
+vcpkg install  libuv:x64-windows-static                      
+vcpkg install  libuv:x86-windows-static                      
+vcpkg install  nlohmann-json:x64-windows-static              
+vcpkg install  nlohmann-json:x86-windows                     
+vcpkg install  nlohmann-json:x86-windows-static              
+vcpkg install  openssl-windows:x64-windows-static            
+vcpkg install  openssl-windows:x86-windows-static            
+vcpkg install  openssl:x64-windows-static                    
+vcpkg install  openssl:x86-windows-static                    
+vcpkg install  protobuf:x64-windows-static                   
+vcpkg install  protobuf:x86-windows-static                   
+vcpkg install  restbed:x64-windows-static                    
+vcpkg install  restbed:x86-windows                           
+vcpkg install  restbed:x86-windows-static                    
+vcpkg install  spdlog:x64-windows-static                     
+vcpkg install  sqlite3:x64-windows-static                    
+vcpkg install  sqlite3:x86-windows                           
+vcpkg install  sqlite3:x86-windows-static                    
+vcpkg install  tacopie:x64-windows-static                    
+vcpkg install  tacopie:x86-windows                           
+vcpkg install  tacopie:x86-windows-static                    
+vcpkg install  zeromq:x64-windows-static                     
+vcpkg install  zeromq:x86-windows-static                     
+vcpkg install  zlib:x64-windows-static                       
+vcpkg install  zlib:x86-windows                              
+vcpkg install  zlib:x86-windows-static 
+```
+
+

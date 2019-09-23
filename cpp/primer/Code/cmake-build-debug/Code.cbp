@@ -11,10 +11,10 @@
 				<Option working_dir="H:/readingBook/cpp/primer/Code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 all"/>
-					<CompileFile command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Code">
@@ -24,8 +24,8 @@
 				<Option type="1"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
-					<Add directory="D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="D:\vs\VC\Tools\MSVC\14.21.27702\ATLMFC\include"/>
+					<Add directory="D:\vs\VC\Tools\MSVC\14.21.27702\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\ucrt"/>
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\shared"/>
@@ -34,10 +34,10 @@
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 Code"/>
-					<CompileFile command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 Code"/>
+					<CompileFile command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Code/fast">
@@ -47,8 +47,8 @@
 				<Option type="1"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
-					<Add directory="D:\devsoft\vs\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="D:\vs\VC\Tools\MSVC\14.21.27702\ATLMFC\include"/>
+					<Add directory="D:\vs\VC\Tools\MSVC\14.21.27702\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"/>
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\ucrt"/>
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\shared"/>
@@ -57,30 +57,30 @@
 					<Add directory="D:\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 Code/fast"/>
-					<CompileFile command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 Code/fast"/>
+					<CompileFile command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="H:/readingBook/cpp/primer/Code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="H:/readingBook/cpp/primer/Code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
-					<DistClean command="D:/devsoft/vs/VC/Tools/MSVC/14.16.27023/bin/Hostx86/x86/nmake.exe /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f H:\readingBook\cpp\primer\Code\cmake-build-debug\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>

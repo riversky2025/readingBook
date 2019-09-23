@@ -1,17 +1,17 @@
 
 <!-- TOC -->
 
-- [1. 三方开源](#1-%E4%B8%89%E6%96%B9%E5%BC%80%E6%BA%90)
-- [2. 安装](#2-%E5%AE%89%E8%A3%85)
-  - [2.1. windows](#21-windows)
-  - [2.2. linux](#22-linux)
-- [3. 开始](#3-%E5%BC%80%E5%A7%8B)
-  - [3.1. 简单使用](#31-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8)
-    - [3.1.1. 运行中Uipackage的状态](#311-%E8%BF%90%E8%A1%8C%E4%B8%ADuipackage%E7%9A%84%E7%8A%B6%E6%80%81)
-    - [3.1.2. ui的构建](#312-ui%E7%9A%84%E6%9E%84%E5%BB%BA)
-    - [3.1.3. 事件(Event)](#313-%E4%BA%8B%E4%BB%B6event)
-    - [3.1.4. 完成](#314-%E5%AE%8C%E6%88%90)
-  - [3.2. 案例2](#32-%E6%A1%88%E4%BE%8B2)
+- [1. 三方开源](#1-%e4%b8%89%e6%96%b9%e5%bc%80%e6%ba%90)
+- [2. 安装](#2-%e5%ae%89%e8%a3%85)
+	- [2.1. windows](#21-windows)
+	- [2.2. linux](#22-linux)
+- [3. 开始](#3-%e5%bc%80%e5%a7%8b)
+	- [3.1. 简单使用](#31-%e7%ae%80%e5%8d%95%e4%bd%bf%e7%94%a8)
+		- [3.1.1. 运行中Uipackage的状态](#311-%e8%bf%90%e8%a1%8c%e4%b8%aduipackage%e7%9a%84%e7%8a%b6%e6%80%81)
+		- [3.1.2. ui的构建](#312-ui%e7%9a%84%e6%9e%84%e5%bb%ba)
+		- [3.1.3. 事件(Event)](#313-%e4%ba%8b%e4%bb%b6event)
+		- [3.1.4. 完成](#314-%e5%ae%8c%e6%88%90)
+	- [3.2. 案例2](#32-%e6%a1%88%e4%be%8b2)
 
 <!-- /TOC -->
 # 1. 三方开源
@@ -77,7 +77,7 @@ func main() {
                 return ture
             })
             window.Show()//阻塞ui
-
+		
         }
     )
     if err!=nil{
@@ -349,5 +349,4 @@ func (mp *MainPage) subAppenHandle(button *ui.Button) {
 		mp.connBtn.Enable()
 	}
 }
-
 ```

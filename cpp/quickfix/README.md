@@ -1,7 +1,38 @@
-# quickfix-study
-# 安装
+<!-- TOC -->
 
-## 平台依赖
+- [1. quickfix-study](#1-quickfix-study)
+- [2. 安装](#2-%E5%AE%89%E8%A3%85)
+  - [2.1. 平台依赖](#21-%E5%B9%B3%E5%8F%B0%E4%BE%9D%E8%B5%96)
+  - [2.2. 基本编译](#22-%E5%9F%BA%E6%9C%AC%E7%BC%96%E8%AF%91)
+  - [2.3. 数据库初始化](#23-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96)
+  - [2.4. 测试](#24-%E6%B5%8B%E8%AF%95)
+- [3. 简单启动](#3-%E7%AE%80%E5%8D%95%E5%90%AF%E5%8A%A8)
+  - [3.1. 项目设置](#31-%E9%A1%B9%E7%9B%AE%E8%AE%BE%E7%BD%AE)
+  - [3.2. 应用生成](#32-%E5%BA%94%E7%94%A8%E7%94%9F%E6%88%90)
+  - [3.3. 配置](#33-%E9%85%8D%E7%BD%AE)
+    - [3.3.1. 配置介绍](#331-%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D)
+- [4. For default application version ID<br/>](#4-for-default-application-version-idbr)
+- [5. For nondefault application version ID<br/>](#5-for-nondefault-application-version-idbr)
+- [6. Use BeginString suffix for app version<br/>](#6-use-beginstring-suffix-for-app-versionbr)
+    - [6.0.2. 校验](#602-%E6%A0%A1%E9%AA%8C)
+- [7. 利用Message进行工作](#7-%E5%88%A9%E7%94%A8message%E8%BF%9B%E8%A1%8C%E5%B7%A5%E4%BD%9C)
+  - [7.1. 接受消息](#71-%E6%8E%A5%E5%8F%97%E6%B6%88%E6%81%AF)
+    - [7.1.1. 类型安全的消息和字段](#711-%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E7%9A%84%E6%B6%88%E6%81%AF%E5%92%8C%E5%AD%97%E6%AE%B5)
+    - [7.1.2. 仅使用类型安全字段](#712-%E4%BB%85%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E5%AD%97%E6%AE%B5)
+    - [7.1.3. 不适用使用类型安全字段](#713-%E4%B8%8D%E9%80%82%E7%94%A8%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8%E5%AD%97%E6%AE%B5)
+  - [7.2. 发送消息](#72-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF)
+  - [7.3. 重复组](#73-%E9%87%8D%E5%A4%8D%E7%BB%84)
+  - [7.4. 用户定义域](#74-%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E5%9F%9F)
+  - [7.5. Demo例子](#75-demo%E4%BE%8B%E5%AD%90)
+- [8. 测试](#8-%E6%B5%8B%E8%AF%95)
+  - [8.1. 单元测试](#81-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95)
+  - [8.2. 接收测试](#82-%E6%8E%A5%E6%94%B6%E6%B5%8B%E8%AF%95)
+
+<!-- /TOC -->
+# 1. quickfix-study
+# 2. 安装
+
+## 2.1. 平台依赖
 |   平台   | 运行  | 编译                                     | 测试 |
 | :------: | :---- | :--------------------------------------- | :--- |
 |   win    |       | Microsoft Visual C++                     | ruby |
@@ -16,7 +47,7 @@
 > * PostgreSQL
 > * STLport
 
-## 基本编译
+## 2.2. 基本编译
 [下载](https://github.com/quickfix/quickfix)
 
 ```
@@ -42,15 +73,15 @@ Compiles PostgreSQL support into QuickFIX. If you enable this option, the postgr
 | mt64  | 静态      | release       | 64    |
 | mt32  | 静态      | release       | 32    |
 **目前编译仅支持mysql57**
-## 数据库初始化
+## 2.3. 数据库初始化
 
 sql文件位于/src/sql/mysql文件夹下
 
-## 测试
+## 2.4. 测试
  
  待测  
-# 简单启动
-## 项目设置
+# 3. 简单启动
+## 3.1. 项目设置
 ```基本配置
 
     C/C++ | Code Generation | Enable C++ Exceptions, should be Yes.
@@ -61,7 +92,7 @@ sql文件位于/src/sql/mysql文件夹下
 
 ```
 
-## 应用生成
+## 3.2. 应用生成
 
 在C++中只需要实现Application接口就可以了。  
 其接口如下： 
@@ -139,7 +170,7 @@ int main( int argc, char** argv )
   }
 }
 ```
-## 配置
+## 3.3. 配置
 一个quickfix 服务端或者客户端 可以管理多个FIX sessions.一个FIX session中需要指定版本号（BeginString），当前应用ID(SenderCompID),对方ID(TargetCompID).并且SessionQualifier 可以区分相同session之间的歧义。  
 SessionSettings类的创建可以通过文件名或者输入流(c++)进行构造。   
 配置文件采用ini风格的格式。主要有两种头控制（DEFAULT和SESSION），DEFAULT表示所有SESSION采用的默认配置，SESSION表示定义一个会话。（如果配置错误将会返回一个ConfigError异常）
@@ -190,7 +221,7 @@ SocketConnectPort2=2932
 SocketConnectHost2=12.12.12.12
 DataDictionary=somewhere/FIX42.xml
 ```
-### 配置介绍
+### 3.3.1. 配置介绍
 <table>
 <tr><td colspan=4>SESSION</td></tr>
 <tr><td>配置项</td><td>描述</td><td>域</td><td>默认值</td></tr>
@@ -222,10 +253,10 @@ DataDictionary=somewhere/FIX42.xml
 <tr><td>AppDataDictionary</td><td>应用数据字典。验证应用程序消息的XML定义文件。此设置仅对fix .1.1(或更新的)会话有效。有关旧传输版本(FIX.4.0 - FIX.4.4)的更多信息，请参见DataDictionary。
 此设置支持为每个会话创建自定义应用程序数据字典的可能性。此设置仅用于FIXT 1.1和新的传输协议。此设置可以用作前缀，为FIXT传输指定多个应用程序字典。例如:<br/>   
 DefaultApplVerID=FIX.4.2 <br/> 
-# For default application version ID<br/> 
+# 4. For default application version ID<br/> 
 AppDataDictionary=FIX42.xml<br/> 
-# For nondefault application version ID<br/> 
-# Use BeginString suffix for app version<br/> 
+# 5. For nondefault application version ID<br/> 
+# 6. Use BeginString suffix for app version<br/> 
 AppDataDictionary.FIX.4.4=FIX44.xml<br/> 
 </td><td>有效的XML数据字典文件，QuickFIX在spec目录中提供了以下默认设置 FIX50SP2.xml
 FIX50SP1.xml FIX50.xml FIX44.xml FIX43.xml FIX42.xml FIX41.xml  FIX40.xml<br/></td><td></td></tr>
@@ -334,7 +365,7 @@ For more details refer to mod_ssl documentation.</td><td></td><td>HIGH:!RC4</td>
 <tr><td>ClientCertificateKeyFile</td><td>该指令指向pems编码的私钥文件。如果私钥没有与服务器证书文件中的证书结合，则使用此附加指令指向具有独立私钥的文件。</td><td></td><td></td></tr>
 </table>
 
-### 校验
+### 6.0.2. 校验
 QuickFIX将在消息到达应用程序之前验证并拒绝任何格式不佳的消息。XML文件定义会话支持的消息、字段和值。  
 spec目录中包含几个标准文件。  
 定义文件的骨架是这样的。  
@@ -372,10 +403,10 @@ spec目录中包含几个标准文件。
   </fields>
 </fix>
 ``` 
-# 利用Message进行工作
-## 接受消息
+# 7. 利用Message进行工作
+## 7.1. 接受消息
 您感兴趣的大多数消息将到达您的应用程序重载的fromApp函数中。所有消息都有一个标题和一个尾部。如果想查看这些字段，必须在消息上调用getHeader()或getTrailer()来访问它们。    
-### 类型安全的消息和字段
+### 7.1.1. 类型安全的消息和字段
 QuickFIX为标准规范中定义的所有消息提供了一个类。  
 ```
 void fromApp(const FIX::Message& message,const FIX::SessionID& sessionID) throw(FIX::FieldNotFound&,FIX::IncorrectDataFormat&,FIX::IncorrectTagValue&,FIX::UnsupportedMessageType&){
@@ -414,7 +445,7 @@ class MyApplication
 : public FIX::Application,
   public FIX::MessageCracker
 ```
-### 仅使用类型安全字段
+### 7.1.2. 仅使用类型安全字段
 使用getField方法从任何消息中获取任何字段。
 ```
 void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
@@ -429,7 +460,7 @@ void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
   message.getField(clOrdID);
 }
 ```
-### 不适用使用类型安全字段
+### 7.1.3. 不适用使用类型安全字段
 使用标记号创建您自己的字段。  
 ```
 void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
@@ -447,7 +478,7 @@ void fromApp( const FIX::Message& message, const FIX::SessionID& sessionID )
   message.getField(FIX::FIELD::Price);
 }
 ```
-## 发送消息
+## 7.2. 发送消息
 可以使用静态Session::sendToTarget方法将消息发送给通信方。    
 这些接口主要有  
 ```
@@ -525,7 +556,7 @@ void sendOrderCancelRequest()
   FIX::Session::sendToTarget(message);
 }
 ```
-## 重复组
+## 7.3. 重复组
 QuickFIX能够发送包含重复组甚至递归重复组的消息。所有重复组都以一个字段开始，该字段指示在一个集合中有多少重复组。可以通过引用在父消息或组的范围内以该字段命名的类来创建组。    
 **发送重复组**  
 创建消息时，声明重复组数量的required字段被设置为零。QuickFIX会在添加组时自动增加字段。  
@@ -570,7 +601,7 @@ message.addGroup(group);
     group.get(MDEntrySize);
     group.get(orderID);
 ```
-## 用户定义域
+## 7.4. 用户定义域
 FIX允许用户定义规范中未定义的字段。如何使用QuickFIX设置和获取用户定义的字段?一种方式是使用非类型安全集，得到这样的字段:  
 ```
 message.setField(6123,"value");
@@ -621,12 +652,12 @@ USER_DEFINE_LENGTH( NAME, NUM )
 USER_DEFINE_PERCENTAGE( NAME, NUM )
 USER_DEFINE_COUNTRY( NAME, NUM )
 ```
-## Demo例子
+## 7.5. Demo例子
 可以在源码中的examples目录中找到
 ordermatch c++的服务端(可以撮合和执行限价单)
 executor 服务端可以撮合所有的限价单
 tradeclient c++客户端（基于控制台)
 trideclientgui (java gui客户端)
-# 测试
-## 单元测试
-## 接收测试
+# 8. 测试
+## 8.1. 单元测试
+## 8.2. 接收测试
