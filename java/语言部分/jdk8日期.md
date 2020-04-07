@@ -30,7 +30,7 @@ LocalDate、LocalTime、LocalDateTime 类是其中较重要的几个类，它们
 |withDayOfMonth()/withDayOfYear()/ withMonth()/withYear()|将月份天数、年份天数、月份、年份修改为指定的值并返回新的对象|
 |plusDays(), plusWeeks(), plusMonths(), plusYears(),plusHours()|向当前对象添加几天、几周、几个月、几年、几小时|
 |minusMonths() / minusWeeks()/ minusDays()/minusYears()/minusHours()|从当前对象减去几月、几周、几天、几年、几小时|
- 
+
 ## 瞬时：Instant  
 Instant：时间线上的一个瞬时点。这可能被用来记录应用程序中的事件时间戳。    
 在处理时间和日期的时候，我们通常会想到年,月,日,时,分,秒。然而，这只是时间的一个模型，是面向人类的。第二种通用模型是面向机器的，或者说是连续的。在此模型中，时间线中的一个点表示为一个很大的数，这有利于计算机处理。在UNIX中，这个数从1970年开始，以秒为的单位；同样的，在Java中，也是从1970年开始，但以毫秒为单位。  
@@ -143,9 +143,121 @@ public void test3() {
 |:--|:--|:--|
 |java.time.Instant与java.util.Date|Date.from(instant)|date.toInstant()|
 |java.time.Instant与java.sql.Timestamp|Timestamp.from(instant)|timestamp.toInstant()|
-|java.time.ZonedDateTime 与java.util.GregorianCalendar|GregorianCalendar.from(zonedDateTime)|cal.toZonedDateTime |  
+|java.time.ZonedDateTime 与java.util.GregorianCalendar|GregorianCalendar.from(zonedDateTime)|cal.toZonedDateTime |
 |java.time.LocalDate与java.sql.Time|Date.valueOf(localDate) |date.toLocalDate() |
 |java.time.LocalTime 与java.sql.Time|Date.valueOf(localDate) |date.toLocalTime() |
 |java.time.LocalDateTime 与java.sql.Timestamp|Timestamp.valueOf(localDateTime) |timestamp.toLocalDateTime() |
 |java.time.ZonedId与java.util.TimeZone|Timezone.getTimeZone(id) |timeZone.toZoneId() |
 |java.time.format.DateTimeFormatter与java.text.DateFormat|formatter.toFormat() |无|
+
+# 综合Demo
+```
+/**
+ * @author riversky
+ * @date 2020/04/07
+ **/
+public class Demo1 {
+    public static void main(String[] args) {
+//      tes1();
+//        tes2();
+//        tes3();
+//        tes4();
+//        tes5();
+//        test6();
+//        tes7();
+        tes8();
+    }
+    /**
+     * now 与of的基本使用
+     */
+    public static void tes1() {
+        var now=Instant.now();
+        System.out.println(now);
+        LocalDate now1 = LocalDate.now();
+        System.out.println(now1);
+        LocalTime now2 = LocalTime.now();
+        System.out.println(now2);
+        LocalDateTime now3 = LocalDateTime.now();
+        System.out.println(now3);
+        ZonedDateTime now4 = ZonedDateTime.now();
+        System.out.println(now4);
+
+        Instant instant = Instant.ofEpochMilli(System.currentTimeMillis());
+        System.out.println(instant);
+
+        LocalDate of = LocalDate.of(2020, Month.APRIL, 7);
+        System.out.println(of);
+    }
+
+    /**
+     * 时区的使用
+     */
+    public static void tes2() {
+        LocalDateTime now = LocalDateTime.now();
+        ZonedDateTime zonedDateTime = now.atZone(ZoneId.systemDefault());
+        System.out.println(zonedDateTime);
+
+    }
+
+    /**
+     * 时间加减的使用
+     */
+    public static void tes3() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime plus = now.plus(1, ChronoUnit.HOURS);
+        System.out.println(plus);
+    }
+
+    /**
+     * ChronoUtit的基于with的修改
+     */
+    public static void tes4() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime with = now.with(ChronoField.SECOND_OF_MINUTE, 2);
+        System.out.println(with);
+
+    }
+    /**
+     * with 修改与调节器
+     */
+    public static void tes5() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime with = now.with(TemporalAdjusters.firstDayOfNextYear());
+        System.out.println(with);
+    }
+
+    /**
+     * between
+     */
+    public static void test6(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime plus = now.plus(3, ChronoUnit.HOURS);
+        long seconds = Duration.between(now, plus).getSeconds();
+        System.out.println(seconds);
+    }
+
+    /**
+     * 转换
+     */
+    public static void tes7(){
+        var date = new java.util.Date();
+        Instant instant = date.toInstant();
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        LocalDate localDate = zonedDateTime.toLocalDate();
+        System.out.println(localDate);
+
+        Date date1 = new Date(System.currentTimeMillis());
+        LocalDate localDate1 = date1.toLocalDate();
+        System.out.println(localDate1);
+    }
+    /**
+     * 格式化
+     */
+    public static void tes8(){
+        LocalDateTime parse = LocalDateTime.parse("2020-04-07A11:18:02.156", DateTimeFormatter.ofPattern("yyyy-MM-dd'A'HH:mm:ss.SSS"));
+        System.out.println(parse);
+        String format = parse.format(DateTimeFormatter.ofPattern("yyyy'@'MM:dd HH:mm:ss"));
+        System.out.println(format);
+    }
+}
+```
