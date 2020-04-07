@@ -133,6 +133,7 @@ The package jsoncpp:x86-windows provides CMake targets:
 * x86-windows-static
 * x86-windows  
   
+
 这个清单以后随着版本的迭代还会再增加。vcpkg不仅支持x86架构，还支持arm架构。注意：这里的arm架构特指类似于surface这种运行在arm处理器上的Win10平台，而并非我们传统意义上的Linux或android的ARM平台。
 
 那如果要安装编译某一个架构的开源库，我们该怎么写呢？我们只需要在需要安装的包后面指定相应的triplet即可。例如我们需要编译64位版本的jsoncpp，那么执行如下命令即可。
@@ -176,7 +177,7 @@ The package jsoncpp:x86-windows provides CMake targets:
 |–nuget	|以nuget包形式导出|
 |–ifw	|我也不知道这是啥格式|
 |–zip	|以zip压缩包形式导出|
-|–7zip	|以7z压缩包形式导出|  
+|–7zip	|以7z压缩包形式导出|
 一般地，导出包的格式为：vcpkg-export-<日期>-<时间>  
 
 默认情况下只会导出x86-windows的包，如果要导出所有包，那需要制定相应的triplet。比如，如果同时导出x86和x64版本的jsoncpp，那执行命令：
@@ -323,6 +324,11 @@ vcpkg install  zeromq:x86-windows-static
 vcpkg install  zlib:x64-windows-static                       
 vcpkg install  zlib:x86-windows                              
 vcpkg install  zlib:x86-windows-static 
+
+vcpkg install  sqlite-orm:x64-windows 
+vcpkg install  sqlite-orm:x64-windows-static                       
+vcpkg install  sqlite-orm:x86-windows                              
+vcpkg install  sqlite-orm:x86-windows-static 
 ```
 
 
