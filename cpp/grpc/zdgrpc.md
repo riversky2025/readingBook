@@ -153,9 +153,12 @@ service OrderDao{
 ![](./img/TIM图片20190424142512.png)  
 ![](./img/TIM图片20190424142607.png)  
 这里主要生成cpp  go java版本
+
 ## 2.1. cpp 版本
 ```
 protoc -I ./proto --cpp_out ./proto/cpp  --grpc_out ./proto/cpp --plugin=protoc-gen-grpc=grpc_cpp_plugin  order.proto
+
+./protoc -I ./proto --cpp_out ./proto/cpp  --grpc_out ./proto/cpp --plugin=protoc-gen-grpc=./grpc_cpp_plugin.exe  zdrpc.proto
 ```
 ## 2.2. java版本  
 
@@ -263,7 +266,12 @@ go install google.golang.org/grpc
 ```
 protoc --go_out=plugins=grpc:. order.proto
 ```
+## python生成
+
+
+
 # 3. 服务端创建
+
 ## C++
 ```
 #pragma once
