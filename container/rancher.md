@@ -92,6 +92,57 @@ sudo docker run -d --restart=unless-stopped -v /dockervolume:/var/lib/rancher/ -
 
 ![1591188313697](.\img\1591188313697.png)
 
+移除某个节点需要进行两步操作
+
+1.  移除docker镜像
+
+```
+#!/bin/sh
+
+CLIST=$(docker ps -qa)
+if [ "x"$CLIST == "x" ]; then
+  echo "No containers exist - skipping container cleanup"
+else
+  docker rm -f $CLIST
+fi
+
+ILIST=$(docker images -a -q)
+if [ "x"$ILIST == "x" ]; then
+  echo "No images exist - skipping image cleanup"
+else
+  docker rmi $ILIST
+fi
+
+VLIST=$(docker volume ls -q)
+if [ "x"$VLIST == "x" ]; then
+  echo "No volumes exist - skipping volume cleanup"
+else
+  docker volume rm -f $VLIST
+fi
+
+```
+
+
+
+1.  移除数据
+
+```
+#!/bin/sh
+
+if [ $(id -u) -ne 0 ]; then
+  echo "Must be run as root!"
+  exit
+fi 
+
+DLIST="/var/lib/etcd /etc/kubernetes /etc/cni /opt/cni /var/lib/cni /var/run/calico /opt/rke"
+for dir in $DLIST; do
+  echo "Removing $dir"
+  rm -rf $dir
+done
+```
+
+
+
 #### linux时间同步定时任务
 ```
 yum install crontabs   
