@@ -82,7 +82,7 @@ ntpdate -u ntp2.aliyun.com
 
 ###  linux 
 ```
-sudo docker run -d --restart=unless-stopped -v /dockervolume:/var/lib/rancher/ -p 80:80 -p 443:443 rancher/rancher:stable
+sudo docker run --privileged -d --restart=unless-stopped -v /dockervolume:/var/lib/rancher/ -p 80:80 -p 443:443 rancher/rancher:stable
 ```
 
 如果是多台主机,需要注意
