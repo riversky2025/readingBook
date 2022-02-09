@@ -183,8 +183,20 @@ chkconfig crond on  //开机启动
 
 
 
+###  Portainer
+
+```
+https://pan.baidu.com/s/13ra6jXHR_7vajLLlf5GVEw 提取码: nzue 
+
+docker run -d  --restart=unless-stopped -p 9000:9000  -v /var/run/docker.sock:/var/run/docker.sock -v /dockerv/portainer/data:/data -v /dockerv/portainer/public:/public --name prtainer  portainer/portainer
+```
+
+
+
+
 
 ### registry部署
+
 镜像：registry:2.7.1  
 
 端口  5000->30000
@@ -626,6 +638,10 @@ flush privileges;
 6. 网络  使用主机网络
 
 
+
+```
+docker run -d  --restart=unless-stopped -p 3306:3306  -v /var/run/docker.sock:/var/run/docker.sock -v /dockerv/mysql/data:/var/lib/mysql -v /dockerv/mysql/config/my.cnf:/etc/mysql/my.cnf --name mysql  mysql:5.7
+```
 
 
 
