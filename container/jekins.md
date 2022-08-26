@@ -509,7 +509,117 @@ node {
 
 ```
 
+## 宿主机tomcat
 
+1. 安装
+
+```
+下载tomcat
+[root@hyc ~]# cd /usr/src/
+[root@hyc src]# wget http://mirror.bit.edu.cn/apache/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz
+# wget https://mirrors.huaweicloud.com/apache/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz
+
+解压部署
+[root@hyc src]# tar xf apache-tomcat-9.0.24.tar.gz -C /usr/local/
+[root@hyc src]# cd /usr/local/
+[root@hyc local]# ln -s apache-tomcat-9.0.24/ tomcat
+[root@hyc local]# ll
+总用量 0
+drwxr-xr-x. 9 root root 220 8月  29 22:22 apache-tomcat-9.0.24
+drwxr-xr-x. 2 root root   6 3月  10 2016 bin
+drwxr-xr-x. 2 root root   6 3月  10 2016 etc
+drwxr-xr-x. 2 root root   6 3月  10 2016 games
+drwxr-xr-x. 2 root root   6 3月  10 2016 include
+drwxr-xr-x. 2 root root   6 3月  10 2016 lib
+drwxr-xr-x. 2 root root   6 3月  10 2016 lib64
+drwxr-xr-x. 2 root root   6 3月  10 2016 libexec
+drwxr-xr-x. 2 root root   6 3月  10 2016 sbin
+drwxr-xr-x. 5 root root  49 7月   3 23:24 share
+drwxr-xr-x. 2 root root   6 3月  10 2016 src
+lrwxrwxrwx. 1 root root  20 8月  29 22:22 tomcat -> apache-tomcat-9.0.24/
+
+
+写一个hello world的java页面
+[root@hyc ~]# vim index.jsp
+[root@hyc ~]# cat index.jsp 
+<html>
+<head>
+        <title>test page</title>
+</head>
+<body>
+        <%
+            out.println("Hellow World");
+        %>
+</body>
+</html>
+
+[root@hyc ~]# mkdir /usr/local/tomcat/webapps/test
+[root@hyc ~]# cp index.jsp /usr/local/tomcat/webapps/test/
+[root@hyc ~]# ll /usr/local/tomcat/webapps/test/
+总用量 4
+-rw-r--r--. 1 root root 141 8月  29 22:28 index.jsp
+
+
+启动tomcat
+[root@hyc ~]# /usr/local/tomcat/bin/catalina.sh start
+Using CATALINA_BASE:   /usr/local/tomcat
+Using CATALINA_HOME:   /usr/local/tomcat
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp
+Using JRE_HOME:        /usr
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
+Tomcat started.
+
+[root@hyc ~]#  ps -ef|grep tomcat
+root       2560      1 20 22:28 pts/1    00:00:02 /usr/bin/java -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dignore.endorsed.dirs= -classpath /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/tomcat -Dcatalina.home=/usr/local/tomcat -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap start
+root       2602   2402  0 22:28 pts/1    00:00:00 grep --color=autotomcat
+
+[root@hyc ~]# ss -antl
+State      Recv-Q Send-Q Local Address:Port               Peer Address:Port              
+LISTEN     0      128     *:22                  *:*                  
+LISTEN     0      100    127.0.0.1:25                  *:*                  
+LISTEN     0      100    :::8080               :::*                  
+LISTEN     0      128    :::22                 :::*                  
+LISTEN     0      100       ::1:25                 :::*                  
+LISTEN     0      1        ::ffff:127.0.0.1:8005               :::*                  
+LISTEN     0      100    :::8009               :::*                
+
+```
+
+2. 配置
+
+```
+配置一
+[root@hyc ~]# vim /usr/local/tomcat/conf/tomcat-users.xml
+[root@hyc ~]# tail -4 /usr/local/tomcat/conf/tomcat-users.xml 
+<role rolename="admin-gui"/>
+<role rolename="manager-gui"/>
+<user username="tomcat" password="123456" roles="admin-gui,manager-gui"/>
+</tomcat-users>   ## 在此行前面添加以上内容
+
+注意：admin-gui是管理Host Manager项的，manager-gui是管理Server status和Manager App项
+
+配置二
+vim /usr/local/tomcat/webapps/manager/META-INF/context.xml
+
+
+
+<Context antiResourceLocking="false" privileged="true" >
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="192\.168\.30\.\d+|127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />     ##此处要允许宿主机的ip访问
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+
+```
+
+3. 重启
+
+   ```
+   [root@hyc ~]# /usr/local/tomcat/bin/shutdown.sh 
+   [root@hyc ~]# /usr/local/tomcat/bin/startup.sh 
+   
+   ```
+
+   
 
 
 

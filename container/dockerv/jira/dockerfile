@@ -1,0 +1,12 @@
+FROM cptactionhank/atlassian-jira-software:7.13.0
+ 
+USER root
+ 
+# 将代理破解包加入容器
+COPY "atlassian-agent.jar" /opt/atlassian/jira/
+COPY "atlassian-extras-3.2.jar" /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/atlassian-extras-3.2.jar
+COPY "atlassian-universal-plugin-manager-plugin-2.22.9.jar" /opt/atlassian/jira/atlassian-jira/WEB-INF/atlassian-bundled-plugins/atlassian-universal-plugin-manager-plugin-2.21.jar
+
+ 
+# 设置启动加载代理包
+RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/jira/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh
